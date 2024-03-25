@@ -35,16 +35,17 @@ class Projet
     #[ORM\JoinColumn(nullable: false)]
     private ?Categorie $categorie = null;
 
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'projets')]
-    private Collection $user;
 
     #[ORM\OneToMany(targetEntity: RendezVous::class, mappedBy: 'projet', orphanRemoval: true)]
     private Collection $rendezVous;
 
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'projets')]
+    private Collection $user;
+
     public function __construct()
     {
-        $this->user = new ArrayCollection();
         $this->rendezVous = new ArrayCollection();
+        $this->user = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -124,6 +125,37 @@ class Projet
         return $this;
     }
 
+
+    /**
+     * @return Collection<int, RendezVous>
+     */
+    public function getRendezVous(): Collection
+    {
+        return $this->rendezVous;
+    }
+
+    public function addRendezVous(RendezVous $rendezVous): static
+    {
+        if (!$this->rendezVous->contains($rendezVous)) {
+            $this->rendezVous->add($rendezVous);
+            $rendezVous->setProjet($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRendezVous(RendezVous $rendezVous): static
+    {
+        if ($this->rendezVous->removeElement($rendezVous)) {
+            // set the owning side to null (unless already changed)
+            if ($rendezVous->getProjet() === $this) {
+                $rendezVous->setProjet(null);
+            }
+        }
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, User>
      */
@@ -144,36 +176,6 @@ class Projet
     public function removeUser(User $user): static
     {
         $this->user->removeElement($user);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, RendezVous>
-     */
-    public function getRendezVous(): Collection
-    {
-        return $this->rendezVous;
-    }
-
-    public function addRendezVou(RendezVous $rendezVou): static
-    {
-        if (!$this->rendezVous->contains($rendezVou)) {
-            $this->rendezVous->add($rendezVou);
-            $rendezVou->setProjet($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRendezVou(RendezVous $rendezVou): static
-    {
-        if ($this->rendezVous->removeElement($rendezVou)) {
-            // set the owning side to null (unless already changed)
-            if ($rendezVou->getProjet() === $this) {
-                $rendezVou->setProjet(null);
-            }
-        }
 
         return $this;
     }

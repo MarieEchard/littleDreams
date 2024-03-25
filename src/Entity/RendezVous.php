@@ -22,11 +22,11 @@ class RendezVous
 
     #[ORM\ManyToOne(inversedBy: 'rendezVous')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
+    private ?Projet $projet = null;
 
     #[ORM\ManyToOne(inversedBy: 'rendezVous')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Projet $projet = null;
+    private ?User $user = null;
 
     public function getId(): ?int
     {
@@ -57,17 +57,6 @@ class RendezVous
         return $this;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): static
-    {
-        $this->user = $user;
-
-        return $this;
-    }
 
     public function getProjet(): ?Projet
     {
@@ -77,6 +66,18 @@ class RendezVous
     public function setProjet(?Projet $projet): static
     {
         $this->projet = $projet;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }
