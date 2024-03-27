@@ -37,7 +37,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     #[Assert\NotBlank]
     #[AppAssert\MotDePasseFort]
-    private ?string $password = null;
+    private string $password;
 
     #[ORM\Column(length: 50)]
     private ?string $nom = null;
