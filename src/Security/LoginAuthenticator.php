@@ -30,8 +30,6 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
     {
         $email = $request->request->get('email', '');
 
-//        $isActif = $request->request->get('isActif', '');
-
         $request->getSession()->set(SecurityRequestAttributes::LAST_USERNAME, $email);
 
         return new Passport(
@@ -51,7 +49,7 @@ class LoginAuthenticator extends AbstractLoginFormAuthenticator
         }
 
         // For example:
-        return new RedirectResponse($this->urlGenerator->generate('app_sortie_liste'));
+        return new RedirectResponse($this->urlGenerator->generate('app_littledreams'));
         //throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 

@@ -6,11 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class HomeController extends AbstractController
+class LittleDreamsController extends AbstractController
 {
-    #[Route('/', name: 'app_home')]
+    #[Route('/', name: 'app_littledreams')]
     public function index(): Response
     {
-        return $this->redirectToRoute('app_vitrine');
+        return $this->render('littleDreams/littleDreamsAccueil.html.twig');
     }
 }
