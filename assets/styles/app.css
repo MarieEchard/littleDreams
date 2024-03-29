@@ -35,3 +35,52 @@ body {
     cursor: auto;
     box-shadow: none;
 }
+
+.nav{
+    background: linear-gradient(to bottom, rgb(0, 196, 255), rgb(253,252,252));
+    opacity: 0.7;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+
+    margin: 1em;
+    position: fixed;
+    z-index: 1000;
+    right: 0;
+    left: 0;
+    color: rgb(255, 0, 0);
+}
+
+.div-banniere{
+    display: block;
+}
+.banniere{
+    display: block;
+    position: relative;
+    left: 0;
+    right: 0;
+}
+
+.default-image {
+    display: block; /* Par défaut, l'image par défaut est affichée */
+    justify-content: center;
+    max-height: 650px;
+    width: 100%;
+}
+
+.mobile-image {
+    display: none; /* Par défaut, l'image pour téléphone est masquée */
+}
+
+/* Affiche l'image pour téléphone sur les écrans dont la largeur est inférieure à 768px */
+@media (max-width: 600px) {
+    .default-image {
+        display: none; /* Masque l'image par défaut sur les téléphones */
+    }
+
+    .mobile-image {
+        display: block; /* Affiche l'image pour téléphone sur les téléphones */
+        justify-content: center;
+        height: 125px;
+        width: 100%;
+    }
+}
