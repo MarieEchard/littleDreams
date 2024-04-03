@@ -42,6 +42,12 @@ class Projet
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'projets')]
     private Collection $user;
 
+    #[ORM\Column]
+    private ?float $paiements = null;
+
+    #[ORM\Column]
+    private ?float $resteAPayer = null;
+
     public function __construct()
     {
         $this->rendezVous = new ArrayCollection();
@@ -176,6 +182,30 @@ class Projet
     public function removeUser(User $user): static
     {
         $this->user->removeElement($user);
+
+        return $this;
+    }
+
+    public function getPaiements(): ?float
+    {
+        return $this->paiements;
+    }
+
+    public function setPaiements(float $paiements): static
+    {
+        $this->paiements = $paiements;
+
+        return $this;
+    }
+
+    public function getResteAPayer(): ?float
+    {
+        return $this->resteAPayer;
+    }
+
+    public function setResteAPayer(float $resteAPayer): static
+    {
+        $this->resteAPayer = $resteAPayer;
 
         return $this;
     }
