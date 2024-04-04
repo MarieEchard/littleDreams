@@ -39,8 +39,8 @@ class Projet
     #[ORM\OneToMany(targetEntity: RendezVous::class, mappedBy: 'projet', orphanRemoval: true)]
     private Collection $rendezVous;
 
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'projets')]
-    private Collection $user;
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'projets')]
+    private Collection $users;
 
     #[ORM\Column]
     private ?float $paiements = null;
@@ -51,7 +51,7 @@ class Projet
     public function __construct()
     {
         $this->rendezVous = new ArrayCollection();
-        $this->user = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -167,21 +167,21 @@ class Projet
      */
     public function getUser(): Collection
     {
-        return $this->user;
+        return $this->users;
     }
 
-    public function addUser(User $user): static
+    public function addUser(User $users): static
     {
-        if (!$this->user->contains($user)) {
-            $this->user->add($user);
+        if (!$this->users->contains($users)) {
+            $this->users->add($users);
         }
 
         return $this;
     }
 
-    public function removeUser(User $user): static
+    public function removeUser(User $users): static
     {
-        $this->user->removeElement($user);
+        $this->users->removeElement($users);
 
         return $this;
     }

@@ -15,8 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class UserType extends AbstractType
 {
@@ -25,7 +24,7 @@ class UserType extends AbstractType
         $builder
             ->add('email', EmailType::class, [
                 'required' => false,
-                'label' => 'E-mail adresse :',
+                'label' => 'E-mail :',
                 'attr' => ['autocomplete' => 'email']
             ])
             ->add('plainPassword', RepeatedType::class, [
@@ -34,27 +33,23 @@ class UserType extends AbstractType
                 'options' => [
                     'attr' => [
                         'autocomplete' => 'new-password',
-                    ],
+                        ],
                 ],
                 'first_options' => [
                     'constraints' => [
-                        new NotBlank([
-                            'message' => 'Entrez le mot de passe.',
-                        ]),
-                        new Length([
-                            'min' => 6,
-                            'minMessage' => 'Au moins {{ limit }} caractères.',
-                            'max' => 4096,
-                        ]),
+                        new Regex('/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{14,}$/',
+                            "Il faut un mot de passe de 14 caractères minimum avec au moins une majuscule, une minuscule, un chiffre et un caractère spécial")
                     ],
-                    'label' => 'Nouveau mot de passe',
+                    'label' => 'Mot de passe:',
                 ],
                 'second_options' => [
-                    'label' => 'Confirmation',
+                    'label' => 'Confirmation du mot de passe:',
                 ],
                 'invalid_message' => 'Les mots de passes ne correspondent pas',
                 'mapped' => false,
             ])
+
+
             ->add('nom', TextType::class, [
                 'label' => 'Votre nom :',
                 'required' => false
@@ -109,10 +104,11 @@ class UserType extends AbstractType
                 'required' => false
             ])
 
-            ->add('estAdministrateur', CheckboxType::class, [
-                'label' => 'Créer en tant qu\'administrateur',
-                'required' => false,
-            ])
+//            ->add('estAdministrateur', CheckboxType::class, [
+//                'label' => 'Créer en tant qu\'administrateur',
+//                'required' => false,
+//                'mapped' => false,
+//            ])
 
             ->add('submit', SubmitType::class, [
                 'label' => 'Envoyer',

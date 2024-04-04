@@ -84,3 +84,13 @@ body {
         width: 100%;
     }
 }
+
+.flash-message {
+    margin-right: 1em;
+    margin-left: 1em;
+    top: 95px;
+    background-color: rgba(112, 231, 102, 0.57);
+    color: white;
+    border-radius: 5px;
+    z-index: 9999;
+}

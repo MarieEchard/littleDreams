@@ -25,9 +25,9 @@
             {{ form_row(form.photo) }}
             {{ form_row(form.nomSociete) }}
 
-            {% if is_granted('ROLE_ADMIN') %}
-                {{ form_row(form.estAdministrateur) }}
-            {% endif %}
+{#            {% if is_granted('ROLE_ADMIN') %}#}
+{#                {{ form_row(form.estAdministrateur) }}#}
+{#            {% endif %}#}
 
             {% if not is_granted('ROLE_ADMIN') %}
                 {{ form_row(form.noRue) }}

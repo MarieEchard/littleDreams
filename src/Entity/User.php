@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Validator\Constraints as AppAssert;
+
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: "Un compte existe déjà avec cet email.")]
@@ -22,57 +22,69 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 180)]
+    #[ORM\Column(length: 180, unique: true)]
+    #[Assert\Email( message: 'L\'email {{ value }} n\'est pas un email valide il doit être de forme: "JohnSmith@exemple.com".')]
+    #[Assert\NotBlank(message: "Ce champ ne peut pas être vide.")]
     private ?string $email = null;
 
     /**
      * @var list<string> The user roles
      */
     #[ORM\Column]
-    private array $roles = [];
+    private array $roles = ["ROLE_USER"];
 
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
-    #[Assert\NotBlank]
-    #[AppAssert\MotDePasseFort]
     private string $password;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 50, nullable: false)]
+    #[Assert\Length(min: 3, minMessage: "La longueur doit être au moins de {{ limit }} caractères.")]
+    #[Assert\NotBlank(message: "Ce champ ne peut pas être vide.")]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 50, nullable: false)]
+    #[Assert\Length(min: 3, minMessage: "La longueur doit être au moins de {{ limit }} caractères.")]
+    #[Assert\NotBlank(message: "Ce champ ne peut pas être vide.")]
     private ?string $prenom = null;
 
-    #[ORM\Column(length: 20)]
+    #[ORM\Column(length: 20, nullable: true)]
     private ?string $telephone = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank(message: 'Veuillez saisir le nom de votre société')]
     private ?string $nomSociete = null;
 
     #[ORM\Column(length: 10)]
+    #[Assert\NotBlank(message: 'Veuillez saisir le numero de rue de votre adresse de facturation')]
     private ?string $noRue = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: 'Veuillez saisir le nom de rue de votre adresse de facturation')]
     private ?string $rue = null;
 
     #[ORM\Column(length: 20)]
+    #[Assert\NotBlank(message: 'Veuillez saisir le code postal de votre adresse de facturation')]
     private ?string $codePostal = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: 'Veuillez saisir le nom de ville de votre adresse de facturation')]
     private ?string $ville = null;
 
     #[ORM\OneToMany(targetEntity: Question::class, mappedBy: 'user', orphanRemoval: true)]
+    #[ORM\JoinColumn(nullable: true)]
     private Collection $questions;
 
     #[ORM\OneToMany(targetEntity: RendezVous::class, mappedBy: 'user', orphanRemoval: true)]
+    #[ORM\JoinColumn(nullable: true)]
     private Collection $rendezVous;
 
-    #[ORM\ManyToMany(targetEntity: Projet::class, mappedBy: 'user')]
+    #[ORM\ManyToMany(targetEntity: Projet::class, inversedBy: 'users')]
+    #[ORM\JoinColumn(nullable: true)]
     private Collection $projets;
 
     public function __construct()

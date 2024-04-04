@@ -58,26 +58,33 @@
                                href="{{ path('app_profil', {'id' : app.user.id }) }}">Profil</a>
                         </li>
                         <li class="btn btn-sm btn-outline-secondary">
-                            <a class="nav-link" href="{{ path('app_rendezvous_create') }}">rendez-vous</a>
+                            <a class="nav-link" href="{{ path('app_question') }}">Poser une question</a>
                         </li>
                         <li class="btn btn-sm btn-outline-secondary">
-                            <a class="nav-link" href="{{ path('app_devis_create') }}">Devis</a>
+                            <a class="nav-link" href="{{ path('app_rendezvous') }}">rendez-vous</a>
+                        </li>
+                        <li class="btn btn-sm btn-outline-secondary">
+                            <a class="nav-link" href="{{ path('app_devis') }}">Devis</a>
                         </li>
                         <li class="btn btn-sm btn-outline-danger">
                             <a class="nav-link" href="{{ path('app_logout') }}">Deconnexion</a>
                         </li>
 
                     {% else %}
+
+                        <li class="btn btn-sm btn-outline-secondary">
+                            <a class="nav-link" href="{{ path('app_question') }}">Poser une question</a>
+                        </li>
                         <li class="btn btn-sm btn-outline-secondary">
                             <a class="nav-link" href="{{ path('app_login') }}">rendez-vous</a>
                         </li>
                         <li class="btn btn-sm btn-outline-secondary">
                             <a class="nav-link" href="{{ path('app_login') }}">Devis</a>
                         </li>
-                        <li class="btn btn-sm btn-outline-secondary">
-                            <a class="nav-link" href="{{ path('app_question_create') }}">Poser une question</a>
-                        </li>
+
                         <li class="btn btn-sm btn-outline-primary"><a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
+                        </li>
+                        <li class="btn btn-sm btn-outline-primary"><a class="nav-link" href="{{ path('app_profil_creer') }}">Inscription</a>
                         </li>
                     {% endif %}
                 </ul>
@@ -90,7 +97,7 @@
     {# Messages #}
     {% for label, messages in app.flashes %}
         {% for message in messages %}
-            <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+            <div class="alert alert-{{ label }} alert-dismissible fade show flash-message" role="alert">
                 {{ message }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert"
                         aria-label="Close">

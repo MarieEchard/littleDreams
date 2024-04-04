@@ -36,9 +36,7 @@ class UserController extends AbstractController
     public function creer(Request $request, EntityManagerInterface $em, SluggerInterface $slugger, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $user = new User();
-
         $form = $this->createForm(UserType::class, $user);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -57,20 +55,20 @@ class UserController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-            // Attribution du rôle ROLE_ADMIN si le champ estAdministrateur est coché
-            if ($form->get('estAdministrateur')->getData()) {
-                $user->setRoles(['ROLE_ADMIN']);
-            }
+//            // Attribution du rôle ROLE_ADMIN si le champ estAdministrateur est coché
+//            if ($form->get('estAdministrateur')->getData()) {
+//                $user->setRoles(['ROLE_ADMIN']);
+//            }
 
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('success', 'L\'utilisateur a été enregistrée');
-            return $this->redirectToRoute('app_profil', ['id' => $user->getId()]);
+            $this->addFlash('success', 'Inscription réussi, veuillez vous connecter');
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('user/creationProfil.html.twig', [
-            'form' => $form
+            'form' => $form,
         ]);
     }
 
