@@ -27,7 +27,7 @@
                 Studio Little Dreams
             </a>
                         {% if is_granted('IS_AUTHENTICATED') %}
-                            <span>Bienvenue {{ app.user.nom }} {{ app.user.prenom }} [{% for role in app.user.roles %} {{ role }} {% endfor %}]</span>
+                            <span>Bienvenue {{ app.user.prenom }} {{ app.user.nom }} [{% for role in app.user.roles %} {{ role }} {% endfor %}]</span>
                         {% endif %}
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent"
@@ -38,18 +38,14 @@
                 <ul class="navbar-nav d-flex gap-2 ms-auto mb-2 mb-lg-0">
                     {% if is_granted('ROLE_ADMIN') %}
                         <li class="btn btn-sm btn-outline-secondary">
-                            <a class="nav-link" href="{{ path('app_question_liste') }}">Les Questions</a>
-                        </li>
-                        <li class="btn btn-sm btn-outline-secondary">
-                            <a class="nav-link" href="{{ path('app_rendezvous_liste') }}">validation Rendez-Vous</a>
-                        </li>
-                        <li class="btn btn-sm btn-outline-secondary">
-                            <a class="nav-link" href="{{ path('app_demandedevis_liste') }}">Validation Devis</a>
-                        </li>
-                        <li class="btn btn-sm btn-outline-secondary">
                             <a class="nav-link" href="{{ path('app_profil_creer') }}">Creer Administrateur</a>
                         </li>
-
+                        <li class="btn btn-sm btn-outline-secondary">
+                            <a class="nav-link" href="{{ path('app_portfolio_creer') }}">Creer nouvelle carte</a>
+                        </li>
+                        <li class="btn btn-sm btn-outline-secondary">
+                            <a class="nav-link" href="{{ path('app_categorie_creer') }}">Ajout prestation</a>
+                        </li>
 
                     {% endif %}
                     {% if is_granted('IS_AUTHENTICATED') %}
@@ -58,23 +54,17 @@
                                href="{{ path('app_profil', {'id' : app.user.id }) }}">Profil</a>
                         </li>
                         <li class="btn btn-sm btn-outline-secondary">
-                            <a class="nav-link" href="{{ path('app_question') }}">Poser une question</a>
+                            <a class="nav-link" href="{{ path('app_rendezvous') }}">rendez-vous</a>
                         </li>
-{#                        <li class="btn btn-sm btn-outline-secondary">#}
-{#                            <a class="nav-link" href="{{ path('app_rendezvous') }}">rendez-vous</a>#}
-{#                        </li>#}
-{#                        <li class="btn btn-sm btn-outline-secondary">#}
-{#                            <a class="nav-link" href="{{ path('app_devis') }}">Devis</a>#}
-{#                        </li>#}
+                        <li class="btn btn-sm btn-outline-secondary">
+                            <a class="nav-link" href="{{ path('app_devis') }}">Devis</a>
+                        </li>
                         <li class="btn btn-sm btn-outline-danger">
                             <a class="nav-link" href="{{ path('app_logout') }}">Deconnexion</a>
                         </li>
 
                     {% else %}
 
-                        <li class="btn btn-sm btn-outline-secondary">
-                            <a class="nav-link" href="{{ path('app_question') }}">Poser une question</a>
-                        </li>
                         <li class="btn btn-sm btn-outline-secondary">
                             <a class="nav-link" href="{{ path('app_login') }}">rendez-vous</a>
                         </li>
@@ -112,7 +102,9 @@
 
     {% endblock %}
 </div>
-
+<div class="question-panel">
+    <a class="nav-link vertical-text" href="{{ path('app_question') }}">Une question ?</a>
+</div>
 <footer class="bg-light text-center fixed-bottom">
     <div class="text-center p-2">
         <div class="container">

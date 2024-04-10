@@ -21,9 +21,13 @@ class Categorie
     #[ORM\OneToMany(targetEntity: Projet::class, mappedBy: 'categorie', orphanRemoval: true)]
     private Collection $projets;
 
+    #[ORM\ManyToMany(targetEntity: ItemPortfolio::class, mappedBy: 'categories')]
+    private Collection $itemPortfolios;
+
     public function __construct()
     {
         $this->projets = new ArrayCollection();
+        $this->itemPortfolios = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -68,6 +72,33 @@ class Categorie
             if ($projet->getCategorie() === $this) {
                 $projet->setCategorie(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ItemPortfolio>
+     */
+    public function getItemPortfolios(): Collection
+    {
+        return $this->itemPortfolios;
+    }
+
+    public function addItemPortfolio(ItemPortfolio $itemPortfolio): static
+    {
+        if (!$this->itemPortfolios->contains($itemPortfolio)) {
+            $this->itemPortfolios->add($itemPortfolio);
+            $itemPortfolio->addCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeItemPortfolio(ItemPortfolio $itemPortfolio): static
+    {
+        if ($this->itemPortfolios->removeElement($itemPortfolio)) {
+            $itemPortfolio->removeCategory($this);
         }
 
         return $this;
