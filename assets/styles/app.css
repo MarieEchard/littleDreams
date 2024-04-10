@@ -6,6 +6,10 @@ body {
 "
 }
 
+.page-container{
+    position: relative;
+    min-height: 100vh;
+}
 .card{
     border-radius: 8px;
     border: 1px solid #cccccc;
@@ -49,6 +53,27 @@ body {
     left: 0;
     color: rgb(11, 89, 152);
 }
+
+@media (max-width: 992px) {
+    .bubble-menu {
+        position: absolute;
+        top: calc(80%); /* Distance de la bulle de menu par rapport au menu */
+        right: 0; /* Ajustez la position horizontale si nécessaire */
+        display: none;
+        background: linear-gradient(to bottom, rgb(255, 255, 255), rgb(125, 223, 253));
+        padding: 10px;
+        border-radius: 10px;
+        transition: transform 0.2s ease-in-out; /* Ajoute une transition fluide */
+    }
+
+    /* Styles pour la bulle de menu active */
+    .bubble-menu.active {
+        display: block;
+        transform: translateY(10px); /* Fait apparaître la bulle de menu avec un effet de transition */
+    }
+}
+
+
 
 .div-banniere{
     display: block;
@@ -98,7 +123,7 @@ body {
 .question-panel {
     background: rgb(26, 12, 87);
     color: rgb(255, 255, 255);
-    padding: 0px 30px 0px 20px;
+    padding: 0 30px 0 20px;
     line-height: 30px;
     height: 30px;
     font-weight: 700;
@@ -107,7 +132,7 @@ body {
     border-bottom-left-radius: 4px;
     transform: rotate(90deg) scaleX(1) scaleY(1);
     transform-origin: right top;
-    position: absolute;
+    position: fixed;
     bottom: 5em;
     right: 0;
     white-space: nowrap;
@@ -117,10 +142,115 @@ body {
 }
 
 .question-panel:hover {
-    height: 50px;
+    height: 40px;
 }
 
 .vertical-text {
     transform: rotate(180deg);
 
 }
+
+.custom-card-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.custom-sidebar{
+    padding:1em;
+    background-color: #7deaf4;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+
+}
+
+.custom-sidebar ul {
+    list-style-type: none; /* Supprimer les puces de la liste */
+    padding: 0;
+}
+
+.custom-sidebar ul li {
+    margin-bottom: 10px;
+}
+
+.custom-sidebar ul li a {
+    text-decoration: none; /* Supprimer les soulignements des liens */
+    color: #333; /* Couleur du texte */
+    font-size: 16px; /* Taille de la police */
+    font-weight: bold; /* Gras */
+}
+
+.custom-sidebar ul li a:hover {
+    color: #025abb; /* Couleur du texte au survol */
+}
+
+.card-header-custom{
+    width: 100%;
+    background-color: rgb(7, 186, 250, 0.28);
+    padding: 1em;
+    border-radius: 8px;
+}
+
+.custom-card-profile{
+    border-radius: 8px;
+    display: flex;
+    box-sizing: border-box;
+    width: 35rem;
+    margin-top: 7em;
+    background-color: #acfdf2;
+}
+
+.photo-profile-custom{
+    border-radius: 50%;
+    width: 250px;
+    height: 250px;
+    padding: 1em;
+    margin-left: 4em;
+    margin-right: 4em;
+}
+
+.hr{
+    margin: 2rem 0;
+}
+
+.custom-profile-button{
+    margin: 1em;
+}
+
+.card-text-custom{
+    margin: 1em;
+
+
+}
+
+/*.bubble-menu {*/
+/*    position: absolute;*/
+/*    top: calc(100% + 10px);*/
+/*    right: 0;*/
+/*    display: none;*/
+/*    background-color: #fff;*/
+/*    border-radius: 10px;*/
+/*    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);*/
+/*    padding: 10px;*/
+/*    transition: transform 0.2s ease-in-out;*/
+/*}*/
+
+/*.bubble-menu.active {*/
+/*    display: block;*/
+/*    transform: translateY(10px);*/
+/*}*/
+
+/*.navbar-toggler {*/
+/*    background-color: transparent;*/
+/*    border: none;*/
+/*    cursor: pointer;*/
+/*}*/
+
+/*.navbar-toggler-icon {*/
+/*    display: inline-block;*/
+/*    width: 1.5em;*/
+/*    height: 1.5em;*/
+/*    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2 2.5A.5.5 0 0 1 2.5 2h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0 5A.5.5 0 0 1 2.5 7h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/></svg>');*/
+/*    background-size: contain;*/
+/*    background-repeat: no-repeat;*/
+/*    background-position: center;*/
+/*}*/

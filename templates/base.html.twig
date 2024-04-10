@@ -8,102 +8,100 @@
     {% block stylesheets %}
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+        <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
     {% endblock %}
 
     {% block javascripts %}
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
         {% block importmap %}{{ importmap('app') }}{% endblock %}
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const navbarToggler = document.getElementById('navbarToggler');
+                const bubbleMenu = document.getElementById('bubbleMenu');
+
+                navbarToggler.addEventListener('click', function(event) {
+                    event.stopPropagation(); // Empêche le clic de se propager au document
+                    bubbleMenu.classList.toggle('active');
+                });
+
+                // Ajouter un gestionnaire d'événement de clic au document entier pour fermer le menu lorsqu'on clique à l'extérieur
+                document.addEventListener('click', function(event) {
+                    if (!bubbleMenu.contains(event.target) && event.target !== navbarToggler) {
+                        bubbleMenu.classList.remove('active');
+                    }
+                });
+            });
+        </script>
+
     {% endblock %}
 </head>
 <body>
-
 <header class="flex-wrap justify-content-center">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light nav"
-    >
+    <nav class="navbar navbar-expand-lg navbar-light bg-light nav">
         <div class="container-fluid">
             <a class="navbar-brand display-6" href="{{ path('app_littledreams') }}">
                 <img src="{{ asset('img/Logo300x200.png') }}" alt="logo" width="50"
                      class="d-inline-block align-text-center">
                 Studio Little Dreams
             </a>
-                        {% if is_granted('IS_AUTHENTICATED') %}
-                            <span>Bienvenue {{ app.user.prenom }} {{ app.user.nom }} [{% for role in app.user.roles %} {{ role }} {% endfor %}]</span>
-                        {% endif %}
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            {% if is_granted('IS_AUTHENTICATED') %}
+                <span> [{% for role in app.user.roles %} {{ role }} {% endfor %}]</span>
+            {% endif %}
+            <!-- Liens de navigation -->
+            <!-- Bouton burger -->
+            <button class="navbar-toggler" type="button" id="navbarToggler"
+                    data-bs-target="#bubbleMenu"
+                    aria-controls="bubbleMenu"
+                    aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+           <div class="collapse navbar-collapse bubble-menu" id="bubbleMenu">
                 <ul class="navbar-nav d-flex gap-2 ms-auto mb-2 mb-lg-0">
                     {% if is_granted('ROLE_ADMIN') %}
-                        <li class="btn btn-sm btn-outline-secondary">
-                            <a class="nav-link" href="{{ path('app_profil_creer') }}">Creer Administrateur</a>
-                        </li>
-                        <li class="btn btn-sm btn-outline-secondary">
-                            <a class="nav-link" href="{{ path('app_portfolio_creer') }}">Creer nouvelle carte</a>
-                        </li>
-                        <li class="btn btn-sm btn-outline-secondary">
-                            <a class="nav-link" href="{{ path('app_categorie_creer') }}">Ajout prestation</a>
-                        </li>
-
+                        <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" href="{{ path('app_profil_creer') }}">Creer Administrateur</a></li>
+                        <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" href="{{ path('app_portfolio_creer') }}">Creer nouvelle carte</a></li>
+                        <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" href="{{ path('app_categorie_creer') }}">Ajout prestation</a></li>
                     {% endif %}
                     {% if is_granted('IS_AUTHENTICATED') %}
-                        <li class="btn btn-sm btn-outline-secondary">
-                            <a class="nav-link"
-                               href="{{ path('app_profil', {'id' : app.user.id }) }}">Profil</a>
-                        </li>
-                        <li class="btn btn-sm btn-outline-secondary">
-                            <a class="nav-link" href="{{ path('app_rendezvous') }}">rendez-vous</a>
-                        </li>
-                        <li class="btn btn-sm btn-outline-secondary">
-                            <a class="nav-link" href="{{ path('app_devis') }}">Devis</a>
-                        </li>
-                        <li class="btn btn-sm btn-outline-danger">
-                            <a class="nav-link" href="{{ path('app_logout') }}">Deconnexion</a>
-                        </li>
-
+                        <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" href="{{ path('app_profil', {'id' : app.user.id }) }}">Profil</a></li>
+                        <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" href="{{ path('app_rendezvous') }}">rendez-vous</a></li>
+                        <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" href="{{ path('app_devis') }}">Devis</a></li>
+                        <li class="btn btn-sm btn-outline-danger"><a class="nav-link" href="{{ path('app_logout') }}">Deconnexion</a></li>
                     {% else %}
-
-                        <li class="btn btn-sm btn-outline-secondary">
-                            <a class="nav-link" href="{{ path('app_login') }}">rendez-vous</a>
-                        </li>
-                        <li class="btn btn-sm btn-outline-secondary">
-                            <a class="nav-link" href="{{ path('app_login') }}">Devis</a>
-                        </li>
-
-                        <li class="btn btn-sm btn-outline-primary"><a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
-                        </li>
-                        <li class="btn btn-sm btn-outline-primary"><a class="nav-link" href="{{ path('app_profil_creer') }}">Inscription</a>
-                        </li>
+                        <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" href="{{ path('app_login') }}">rendez-vous</a></li>
+                        <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" href="{{ path('app_login') }}">Devis</a></li>
+                        <li class="btn btn-sm btn-outline-primary"><a class="nav-link" href="{{ path('app_login') }}">Connexion</a></li>
+                        <li class="btn btn-sm btn-outline-primary"><a class="nav-link" href="{{ path('app_profil_creer') }}">Inscription</a></li>
                     {% endif %}
                 </ul>
             </div>
+
         </div>
     </nav>
 </header>
 
-<div>
-    {# Messages #}
-    {% for label, messages in app.flashes %}
-        {% for message in messages %}
-            <div class="alert alert-{{ label }} alert-dismissible fade show flash-message" role="alert">
-                {{ message }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"
-                        aria-label="Close">
-                </button>
-            </div>
+
+<div class="page-container">
+    <div>
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }} alert-dismissible fade show flash-message" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                            aria-label="Close">
+                    </button>
+                </div>
+            {% endfor %}
         {% endfor %}
-    {% endfor %}
-</div>
+    </div>
+    <div>
+        {% block body %}
 
-<div class="">
-    {% block body %}
-
-    {% endblock %}
-</div>
-<div class="question-panel">
-    <a class="nav-link vertical-text" href="{{ path('app_question') }}">Une question ?</a>
+        {% endblock %}
+    </div>
+    <div class="question-panel">
+        <a class="nav-link vertical-text" href="{{ path('app_question') }}">Une question ?</a>
+    </div>
 </div>
 <footer class="bg-light text-center fixed-bottom">
     <div class="text-center p-2">
