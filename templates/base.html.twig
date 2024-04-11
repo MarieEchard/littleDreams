@@ -32,6 +32,12 @@
                 });
             });
         </script>
+        <script>
+            function alertAndRedirect() {
+                alert("Vous devez vous connecter avant d'accéder à cette page");
+                window.location.href = "{{ path('app_login') }}";
+            }
+        </script>
 
     {% endblock %}
 </head>
@@ -68,8 +74,8 @@
                         <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" href="{{ path('app_devis') }}">Devis</a></li>
                         <li class="btn btn-sm btn-outline-danger"><a class="nav-link" href="{{ path('app_logout') }}">Deconnexion</a></li>
                     {% else %}
-                        <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" href="{{ path('app_login') }}">rendez-vous</a></li>
-                        <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" href="{{ path('app_login') }}">Devis</a></li>
+                        <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" onclick="return alertAndRedirect()">rendez-vous</a></li>
+                        <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" onclick="return alertAndRedirect()">Devis</a></li>
                         <li class="btn btn-sm btn-outline-primary"><a class="nav-link" href="{{ path('app_login') }}">Connexion</a></li>
                         <li class="btn btn-sm btn-outline-primary"><a class="nav-link" href="{{ path('app_profil_creer') }}">Inscription</a></li>
                     {% endif %}

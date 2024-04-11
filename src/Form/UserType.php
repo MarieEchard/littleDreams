@@ -113,13 +113,11 @@ class UserType extends AbstractType
             ->add('submit', SubmitType::class, [
                 'label' => 'Envoyer',
                 'attr' => [
-//                    'class' => 'btn btn-primary mr-2'
                 ]
             ])
             ->add('return', ButtonType::class, [
                 'label' => 'Retour',
                 'attr' => [
-//                    'class' => 'btn btn-secondary',
                     'onclick' => 'history.back()'
                 ]
             ]);
