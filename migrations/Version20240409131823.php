@@ -24,11 +24,6 @@ final class Version20240409131823 extends AbstractMigration
         $this->addSql('CREATE TABLE item_portfolio_categorie (item_portfolio_id INT NOT NULL, categorie_id INT NOT NULL, INDEX IDX_283EF0DA7631AB82 (item_portfolio_id), INDEX IDX_283EF0DABCF5E72D (categorie_id), PRIMARY KEY(item_portfolio_id, categorie_id)) DEFAULT CHARACTER SET utf8mb4');
         $this->addSql('ALTER TABLE item_portfolio_categorie ADD CONSTRAINT FK_283EF0DA7631AB82 FOREIGN KEY (item_portfolio_id) REFERENCES item_portfolio (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE item_portfolio_categorie ADD CONSTRAINT FK_283EF0DABCF5E72D FOREIGN KEY (categorie_id) REFERENCES categorie (id) ON DELETE CASCADE');
-        $this->addSql('ALTER TABLE projet ADD CONSTRAINT FK_50159CA9BCF5E72D FOREIGN KEY (categorie_id) REFERENCES categorie (id)');
-        $this->addSql('ALTER TABLE question ADD CONSTRAINT FK_B6F7494EA76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
-        $this->addSql('ALTER TABLE rendez_vous ADD CONSTRAINT FK_65E8AA0AC18272 FOREIGN KEY (projet_id) REFERENCES projet (id)');
-        $this->addSql('ALTER TABLE rendez_vous ADD CONSTRAINT FK_65E8AA0AA76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
-        $this->addSql('ALTER TABLE reset_password_request ADD CONSTRAINT FK_7CE748AA76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
         $this->addSql('ALTER TABLE user_projet ADD CONSTRAINT FK_35478794A76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
         $this->addSql('ALTER TABLE user_projet ADD CONSTRAINT FK_35478794C18272 FOREIGN KEY (projet_id) REFERENCES projet (id) ON DELETE CASCADE');
     }
