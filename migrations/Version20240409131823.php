@@ -20,10 +20,15 @@ final class Version20240409131823 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE item_portfolio (id INT AUTO_INCREMENT NOT NULL, nom VARCHAR(255) NOT NULL, objectif_client VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4');
-        $this->addSql('CREATE TABLE item_portfolio_categorie (item_portfolio_id INT NOT NULL, categorie_id INT NOT NULL, INDEX IDX_283EF0DA7631AB82 (item_portfolio_id), INDEX IDX_283EF0DABCF5E72D (categorie_id), PRIMARY KEY(item_portfolio_id, categorie_id)) DEFAULT CHARACTER SET utf8mb4');
-        $this->addSql('ALTER TABLE item_portfolio_categorie ADD CONSTRAINT FK_283EF0DA7631AB82 FOREIGN KEY (item_portfolio_id) REFERENCES item_portfolio (id) ON DELETE CASCADE');
-        $this->addSql('ALTER TABLE item_portfolio_categorie ADD CONSTRAINT FK_283EF0DABCF5E72D FOREIGN KEY (categorie_id) REFERENCES categorie (id) ON DELETE CASCADE');
+        if (!$schema->hasTable('item_portfolio')) {
+            $this->addSql('CREATE TABLE item_portfolio (id INT AUTO_INCREMENT NOT NULL, nom VARCHAR(255) NOT NULL, objectif_client VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4');
+        }
+        if (!$schema->hasTable('item_portfolio_categorie')) {
+            $this->addSql('CREATE TABLE item_portfolio_categorie (item_portfolio_id INT NOT NULL, categorie_id INT NOT NULL, INDEX IDX_283EF0DA7631AB82 (item_portfolio_id), INDEX IDX_283EF0DABCF5E72D (categorie_id), PRIMARY KEY(item_portfolio_id, categorie_id)) DEFAULT CHARACTER SET utf8mb4');
+            $this->addSql('ALTER TABLE item_portfolio_categorie ADD CONSTRAINT FK_283EF0DA7631AB82 FOREIGN KEY (item_portfolio_id) REFERENCES item_portfolio (id) ON DELETE CASCADE');
+            $this->addSql('ALTER TABLE item_portfolio_categorie ADD CONSTRAINT FK_283EF0DABCF5E72D FOREIGN KEY (categorie_id) REFERENCES categorie (id) ON DELETE CASCADE');
+        }
+
     }
 
     public function down(Schema $schema): void
