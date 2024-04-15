@@ -25,20 +25,8 @@ final class Version20240403182540 extends AbstractMigration
             $this->addSql('ALTER TABLE user_projet ADD CONSTRAINT FK_35478794A76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
             $this->addSql('ALTER TABLE user_projet ADD CONSTRAINT FK_35478794C18272 FOREIGN KEY (projet_id) REFERENCES projet (id) ON DELETE CASCADE');
         } else {
-            echo 'Table user_projet already exists. Skipping creation.';
+            echo 'La table user_projet existe déjà. Création ignorée.';
         }
-
-        if (!$schema->getTable('projet')->hasForeignKey('fk_categorie_id')) {
-            $this->addSql('ALTER TABLE projet ADD CONSTRAINT fk_categorie_id FOREIGN KEY (categorie_id) REFERENCES categorie (id)');
-        } else {
-            echo 'Foreign key constraint "fk_categorie_id" already exists. Skipping creation.';
-        }
-        $this->addSql('ALTER TABLE projet_user ADD CONSTRAINT FK_FA413966C18272 FOREIGN KEY (projet_id) REFERENCES projet (id) ON DELETE CASCADE');
-        $this->addSql('ALTER TABLE projet_user ADD CONSTRAINT FK_FA413966A76ED395 FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE');
-        $this->addSql('ALTER TABLE question ADD CONSTRAINT FK_B6F7494EA76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
-        $this->addSql('ALTER TABLE rendez_vous ADD CONSTRAINT FK_65E8AA0AC18272 FOREIGN KEY (projet_id) REFERENCES projet (id)');
-        $this->addSql('ALTER TABLE rendez_vous ADD CONSTRAINT FK_65E8AA0AA76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
-        $this->addSql('ALTER TABLE reset_password_request ADD CONSTRAINT FK_7CE748AA76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
         $this->addSql('ALTER TABLE user CHANGE telephone telephone VARCHAR(20) DEFAULT NULL');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_8D93D649E7927C74 ON user (email)');
     }
