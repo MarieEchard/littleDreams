@@ -28,7 +28,11 @@ final class Version20240403182540 extends AbstractMigration
             echo 'Table user_projet already exists. Skipping creation.';
         }
 
-        $this->addSql('ALTER TABLE projet ADD CONSTRAINT FK_50159CA9BCF5E72D FOREIGN KEY (categorie_id) REFERENCES categorie (id)');
+        if (!$schema->getTable('projet')->hasForeignKey('fk_categorie_id')) {
+            $this->addSql('ALTER TABLE projet ADD CONSTRAINT fk_categorie_id FOREIGN KEY (categorie_id) REFERENCES categorie (id)');
+        } else {
+            echo 'Foreign key constraint "fk_categorie_id" already exists. Skipping creation.';
+        }
         $this->addSql('ALTER TABLE projet_user ADD CONSTRAINT FK_FA413966C18272 FOREIGN KEY (projet_id) REFERENCES projet (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE projet_user ADD CONSTRAINT FK_FA413966A76ED395 FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE question ADD CONSTRAINT FK_B6F7494EA76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
