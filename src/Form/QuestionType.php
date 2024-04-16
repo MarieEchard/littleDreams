@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\Regex;
 
@@ -25,20 +26,17 @@ class QuestionType extends AbstractType
     {
         $builder
 
-            ->add('nom', TextType::class, [
-                'label' => 'Votre nom :',
-                'required' => false
-            ])
-
             ->add('email', EmailType::class, [
                 'required' => false,
                 'label' => 'E-mail :',
-                'attr' => ['autocomplete' => 'email']
+                'attr' => ['class' => 'form-control']
             ])
 
             ->add('question', TextareaType::class, [
-                'label' => 'Quelle est votre question :',
-                'required' => false
+                'label' => 'Quelle est votre question ?',
+                'required' => false,
+                'attr' => ['class' => 'form-control',
+                    'rows' =>8,]
             ])
 
             ->add('submit', SubmitType::class, [
@@ -50,9 +48,11 @@ class QuestionType extends AbstractType
             ->add('return', ButtonType::class, [
                 'label' => 'Retour',
                 'attr' => [
-                    'class' => 'btn btn-danger'
+                    'class' => 'btn btn-secondary',
+                    'onclick' => 'history.back()'
                 ]
             ]);
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void

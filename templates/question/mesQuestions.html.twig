@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil - LittleDreams{% endblock %}
+
+{% block body %}
+    <div class="container d-flex justify-content-center">
+        <div class="background">
+            <img src="{{ asset('img/TechBleu.png') }}" alt="image IA" style="height: 100%; width: 100%">
+        </div>
+        <div class="mb-3 custom-card-profile">
+            <div class="row g-0">
+                <div class="col-md-4 custom-sidebar">
+                    <ul>
+                        <li><a href="{{ path('app_profil', {'id' : app.user.id }) }}"> Mon Profil</a></li>
+                        <hr>
+                        <li>Mes questions</li>
+                        <hr>
+                        <li><a href="#">Mes rendez-vous</a></li>
+                        <hr>
+                        <li><a href="#">Mes demandes de devis</a></li>
+                        <hr>
+                        <li><a href="#">Mes projets</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-8">
+                    <div class="card-header card-header-custom" ><h5 class="card-title">Mes questions</h5></div>
+                    <div class="card-body">
+
+                        {% for question in questions %}
+
+                        <div class="card-text-custom">
+                            <p class="card-text">Date : {{ question.date }}</p>
+                            <p class="card-text">Votre Question : {{ question.question}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

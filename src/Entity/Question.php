@@ -4,14 +4,13 @@ namespace App\Entity;
 
 use App\Repository\QuestionRepository;
 use Doctrine\DBAL\Types\Types;
+
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: QuestionRepository::class)]
 class Question
 {
-    const STATUS_PENDING = 'en attente';
-    const STATUS_ASSOCIATED = 'associé';
-
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -21,20 +20,23 @@ class Question
     private ?\DateTimeInterface $date = null;
 
     #[ORM\Column(length: 1000)]
+    #[Assert\NotBlank(message: "Ce champ ne peut pas être vide.")]
     private ?string $question = null;
 
     #[ORM\Column(length: 1000, nullable: true)]
     private ?string $reponse = null;
 
     #[ORM\ManyToOne(inversedBy: 'questions')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?User $user = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Email]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $status = null;
+    private array $status = ["EN_ATTENTE"];
 
     public function getId(): ?int
     {
@@ -46,7 +48,7 @@ class Question
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): static
+    public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
 
@@ -101,12 +103,23 @@ class Question
         return $this;
     }
 
-    public function getStatus(): ?string
+
+    /**
+     * @return list<string>
+     */
+    public function getStatus(): array
     {
-        return $this->status;
+        $status = $this->status;
+        // garantit que toutes les questions aient le statut EN_ATTENTE
+        $status[] = 'EN_ATTENTE';
+
+        return array_unique($status);
     }
 
-    public function setStatus(string $status): static
+    /**
+     * @param list<string> $status
+     */
+    public function setStatus(array $status): static
     {
         $this->status = $status;
 
