@@ -11,6 +11,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: QuestionRepository::class)]
 class Question
 {
+
+    public const STATUS_EN_ATTENTE = 'EN_ATTENTE';
+    public const STATUS_ASSOCIEE = 'ASSOCIEE';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -35,8 +39,8 @@ class Question
     #[Assert\Email]
     private ?string $email = null;
 
-    #[ORM\Column(length: 255)]
-    private array $status = ["EN_ATTENTE"];
+    #[ORM\Column(type: 'json')]
+    private array $status = [self::STATUS_EN_ATTENTE];
 
     public function getId(): ?int
     {
@@ -105,21 +109,18 @@ class Question
 
 
     /**
-     * @return list<string>
+     * @return array<string>
      */
     public function getStatus(): array
     {
         $status = $this->status;
-        // garantit que toutes les questions aient le statut EN_ATTENTE
-        $status[] = 'EN_ATTENTE';
-
-        return array_unique($status);
+        return $this->status;
     }
 
     /**
-     * @param list<string> $status
+     * @param array<string> $status
      */
-    public function setStatus(array $status): static
+    public function setStatus(array $status): self
     {
         $this->status = $status;
 

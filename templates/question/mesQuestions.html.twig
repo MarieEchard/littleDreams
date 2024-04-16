@@ -29,10 +29,11 @@
 
                         {% for question in questions %}
 
-                        <div class="card-text-custom">
-                            <p class="card-text">Date : {{ question.date }}</p>
-                            <p class="card-text">Votre Question : {{ question.question}}</p>
-                        </div>
+                            <div class="card-text-custom">
+                                <p class="card-text">Date : {{ question.date }}</p>
+                                <p class="card-text">Votre Question : {{ question.question}}</p>
+                            </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>

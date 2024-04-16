@@ -28,7 +28,6 @@ class QuestionController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // Obtenez les données du formulaire
             $question = $form->getData();
-
             // Définir la date actuelle
             $question->setDate(new DateTime());
 
@@ -47,7 +46,7 @@ class QuestionController extends AbstractController
         ]);
     }
 
-    #[Route('/mes-questions', name: 'mes_questions')]
+    #[Route('/mes-questions', name: 'app_mes-questions')]
     public function mesQuestions(EntityManagerInterface $em): Response
     {
         // Récupérer l'utilisateur connecté
@@ -60,7 +59,7 @@ class QuestionController extends AbstractController
         $questions = $questionRepository->findBy(['user' => $user]);
 
         // Rendre la vue Twig en transmettant les questions à afficher
-        return $this->render('profil/mesQuestions.html.twig', [
+        return $this->render('question/mesQuestions.html.twig', [
             'questions' => $questions,
         ]);
     }

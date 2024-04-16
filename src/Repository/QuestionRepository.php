@@ -21,19 +21,13 @@ class QuestionRepository extends ServiceEntityRepository
         parent::__construct($registry, Question::class);
     }
 
-    /**
-     * Trouver les questions en attente par e-mail.
-     *
-     * @param string $email
-     * @return Question[] Retourne un tableau d'objets Question
-     */
     public function trouverQuestionsEnAttenteParEmail(string $email): array
     {
         return $this->createQueryBuilder('q')
             ->andWhere('q.email = :email')
             ->andWhere('q.status = :status')
             ->setParameter('email', $email)
-            ->setParameter('status', Question::STATUS_PENDING)
+            ->setParameter('status', Question::STATUS_EN_ATTENTE)
             ->getQuery()
             ->getResult();
     }

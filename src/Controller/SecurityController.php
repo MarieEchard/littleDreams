@@ -35,13 +35,13 @@ class SecurityController extends AbstractController
             $questionRepository = $em->getRepository(Question::class);
 
             // Récupérer les questions en attente associées à l'email de l'utilisateur connecté
-            $pendingQuestions = $questionRepository->trouverQuestionsEnAttenteParEmail($user->getEmail());
+            $questionsEnAttentes = $questionRepository->trouverQuestionsEnAttenteParEmail($user->getEmail());
 
             // Mettre à jour le statut des questions en attente et associez-les à l'utilisateur
-            foreach ($pendingQuestions as $pendingQuestion) {
-                $pendingQuestion->setStatus(Question::STATUS_ASSOCIATED);
-                $pendingQuestion->setUser($user);
-                $em->persist($pendingQuestion);
+            foreach ($questionsEnAttentes as $questionEnAttente) {
+                $questionEnAttente->setStatus([Question::STATUS_ASSOCIEE]);
+                $questionEnAttente->setUser($user);
+                $em->persist($questionEnAttente);
             }
 
             // Enregistrer les modifications dans la base de données
