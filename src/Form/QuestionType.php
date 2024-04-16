@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Question;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
@@ -35,11 +36,6 @@ class QuestionType extends AbstractType
                 'attr' => ['autocomplete' => 'email']
             ])
 
-            ->add('nomSociete', TextType::class, [
-                'label' => 'Nom de votre société :',
-                'required' => false
-            ])
-
             ->add('question', TextareaType::class, [
                 'label' => 'Quelle est votre question :',
                 'required' => false
@@ -48,12 +44,13 @@ class QuestionType extends AbstractType
             ->add('submit', SubmitType::class, [
                 'label' => 'Envoyer',
                 'attr' => [
+                    'class' => 'btn btn-primary'
                 ]
             ])
             ->add('return', ButtonType::class, [
                 'label' => 'Retour',
                 'attr' => [
-                    'onclick' => 'history.back()'
+                    'class' => 'btn btn-danger'
                 ]
             ]);
     }
@@ -61,7 +58,7 @@ class QuestionType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class' => Question::class,
         ]);
     }
 }
