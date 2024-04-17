@@ -30,7 +30,7 @@
                         {% for question in questions %}
 
                             <div class="card-text-custom">
-                                <p class="card-text">Date : {{ question.date }}</p>
+                                <p class="card-text">Date : {{ question.date|date('Y-m-d H:i:s') }}</p>
                                 <p class="card-text">Votre Question : {{ question.question}}</p>
                             </div>
                         {% endfor %}

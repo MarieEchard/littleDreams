@@ -60,7 +60,8 @@ class UserController extends AbstractController
 //                $user->setRoles(['ROLE_ADMIN']);
 //            }
             // Associer les questions en attente à l'utilisateur s'il y en a
-            $questionsEnAttente = $em->getRepository(Question::class)->findBy(['email' => $form['email'], 'statut' => 'en attente']);
+            $email = $form->get('email')->getData();
+            $questionsEnAttente = $em->getRepository(Question::class)->findBy(['email' => $email, 'statut' => 'en attente']);
 
             foreach ($questionsEnAttente as $question) {
                 $question->setUser($user);
