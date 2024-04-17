@@ -31,6 +31,7 @@ class QuestionController extends AbstractController
             // Définir la date actuelle
             $question->setDate(new DateTime());
 
+            $question->setStatut('en attente');
             // Enregistrer la question dans la base de données
             $em->persist($question);
             $em->flush();
@@ -53,11 +54,7 @@ class QuestionController extends AbstractController
         $user = $this->getUser();
 
         // Récupérer le repository de l'entité Question
-        $questionRepository = $em->getRepository(Question::class);
-
-        // Récupérer les questions de l'utilisateur connecté
-        $questions = $questionRepository->findBy(['user' => $user]);
-
+        $questions = $em->getRepository(Question::class)->findBy(['user' => $user]);
         // Rendre la vue Twig en transmettant les questions à afficher
         return $this->render('question/mesQuestions.html.twig', [
             'questions' => $questions,

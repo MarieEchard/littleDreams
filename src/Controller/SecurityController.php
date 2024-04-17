@@ -26,28 +26,6 @@ class SecurityController extends AbstractController
             $this->addFlash('danger', 'L\'email ou le mot de passe est incorrect.');
         }
 
-        // Si l'utilisateur est connecté, exécutez le code pour associer les questions en attente à son compte
-        if ($this->getUser() !== null) {
-            // Récupérer l'utilisateur connecté
-            $user = $this->getUser();
-
-            // Récupérer le repository de l'entité Question
-            $questionRepository = $em->getRepository(Question::class);
-
-            // Récupérer les questions en attente associées à l'email de l'utilisateur connecté
-            $questionsEnAttentes = $questionRepository->trouverQuestionsEnAttenteParEmail($user->getEmail());
-
-            // Mettre à jour le statut des questions en attente et associez-les à l'utilisateur
-            foreach ($questionsEnAttentes as $questionEnAttente) {
-                $questionEnAttente->setStatus([Question::STATUS_ASSOCIEE]);
-                $questionEnAttente->setUser($user);
-                $em->persist($questionEnAttente);
-            }
-
-            // Enregistrer les modifications dans la base de données
-            $em->flush();
-        }
-
         // Rediriger l'utilisateur vers une page appropriée
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,

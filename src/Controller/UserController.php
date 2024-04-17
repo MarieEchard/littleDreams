@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Question;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
@@ -58,6 +59,14 @@ class UserController extends AbstractController
 //            if ($form->get('estAdministrateur')->getData()) {
 //                $user->setRoles(['ROLE_ADMIN']);
 //            }
+            // Associer les questions en attente à l'utilisateur s'il y en a
+            $questionsEnAttente = $em->getRepository(Question::class)->findBy(['email' => $form['email'], 'statut' => 'en attente']);
+
+            foreach ($questionsEnAttente as $question) {
+                $question->setUser($user);
+                $question->setStatut('associée');
+            }
+
 
             $em->persist($user);
             $em->flush();

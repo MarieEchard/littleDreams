@@ -6,15 +6,12 @@ use App\Repository\QuestionRepository;
 use Doctrine\DBAL\Types\Types;
 
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\String_;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: QuestionRepository::class)]
 class Question
 {
-
-    public const STATUS_EN_ATTENTE = 'EN_ATTENTE';
-    public const STATUS_ASSOCIEE = 'ASSOCIEE';
-
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -39,8 +36,8 @@ class Question
     #[Assert\Email]
     private ?string $email = null;
 
-    #[ORM\Column(type: 'json')]
-    private array $status = [self::STATUS_EN_ATTENTE];
+    #[ORM\Column(length: 50)]
+    private string $statut;
 
     public function getId(): ?int
     {
@@ -107,22 +104,14 @@ class Question
         return $this;
     }
 
-
-    /**
-     * @return array<string>
-     */
-    public function getStatus(): array
+    public function getStatut(): string
     {
-        $status = $this->status;
-        return $this->status;
+        return $this->statut;
     }
 
-    /**
-     * @param array<string> $status
-     */
-    public function setStatus(array $status): self
+    public function setStatut(string $statut): static
     {
-        $this->status = $status;
+        $this->statut = $statut;
 
         return $this;
     }

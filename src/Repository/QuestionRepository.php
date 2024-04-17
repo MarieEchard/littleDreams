@@ -20,15 +20,4 @@ class QuestionRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Question::class);
     }
-
-    public function trouverQuestionsEnAttenteParEmail(string $email): array
-    {
-        return $this->createQueryBuilder('q')
-            ->andWhere('q.email = :email')
-            ->andWhere('q.status = :status')
-            ->setParameter('email', $email)
-            ->setParameter('status', Question::STATUS_EN_ATTENTE)
-            ->getQuery()
-            ->getResult();
-    }
 }
