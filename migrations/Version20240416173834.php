@@ -22,7 +22,6 @@ final class Version20240416173834 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
 
         $this->addSql('ALTER TABLE question CHANGE user_id user_id INT DEFAULT NULL, CHANGE status status JSON NOT NULL');
-        $this->addSql('ALTER TABLE question ADD CONSTRAINT FK_B6F7494EA76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
     }
 
     public function down(Schema $schema): void
