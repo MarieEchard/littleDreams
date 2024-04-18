@@ -17,22 +17,32 @@
                 "
         >
             {{ form_start(form) }}
-
-            {{ form_row(form.nom) }}
-            {{ form_row(form.prenom) }}
-            {{ form_row(form.telephone) }}
+            {% if is_granted("ROLE_ADMIN") %}
+                {{ form_row(form.nom) }}
+                {{ form_row(form.prenom) }}
+                {{ form_row(form.telephone) }}
+            {% endif %}
+            <p class="card-text">Nom : {{ user.nom }}</p>
+            <p class="card-text">Prenom : {{ user.prenom }}</p>
+            <p class="card-text">Téléphone : {{ user.telephone }}</p>
             <p class="card-text">Email : {{ user.email }}</p>
             {{ form_row(form.plainPassword) }}
             {{ form_row(form.photo) }}
             <p class="card-text">Nom de société : {{ user.nomSociete }}</p>
             <p class="card-text">N° de Siret : {{ user.noSiret }}</p>
+            <p class="card-text">N° de rue : {{ user.noRue }}</p>
+            <p class="card-text">Rue : {{ user.rue }}</p>
+            <p class="card-text">Code Postal : {{ user.codePostal }}</p>
+            <p class="card-text">Ville : {{ user.ville }}</p>
 
-
-            {{ form_row(form.noRue) }}
-            {{ form_row(form.rue) }}
-            {{ form_row(form.codePostal) }}
-            {{ form_row(form.ville) }}
-
+            <p class="card-text"> Si vous souhaitez modifier une information<br> verrouillée, veuillez contacter <a href="#"> un administrateur</a>.</p>
+            {% if is_granted("ROLE_ADMIN") %}
+                {{ form_row(form.noRue) }}
+                {{ form_row(form.rue) }}
+                {{ form_row(form.codePostal) }}
+                {{ form_row(form.ville) }}
+            {% endif %}
+            {{ form_row(form.estAdmin) }}
 
             {{ form_widget(form.return) }} {{ form_widget(form.submit) }}
 

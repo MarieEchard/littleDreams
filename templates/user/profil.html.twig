@@ -58,19 +58,19 @@
                         </div>
 
                         <div class="custom-profile-button">
-                            {% if is_granted('ROLE_ADMIN') %}
+
                                 <a class="btn btn-primary" type="button"
                                    href="{{ path('app_profil_modifier', {'id': user.id }) }}"> modifier
                                 </a>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a href="{{ path('app_profil_supprimer', {'id': user.id}) }}" class="btn btn-danger"
+                                   onclick="return confirmDelete();">
+                                    <i class="bi bi-trash"></i>
+                                </a>
                             {% endif %}
-
-                            <a href="{{ path('app_profil_supprimer', {'id': user.id}) }}" class="btn btn-danger"
-                               onclick="return confirmDelete();">
-                                <i class="bi bi-trash"></i>
-                            </a>
                             <script>
                                 function confirmDelete() {
-                                    return confirm("Etes-vous sûr de vouloir supprimer votre compte?");
+                                    return confirm("Etes-vous sûr de vouloir supprimer ce compte?");
                                 }
                             </script>
                         </div>

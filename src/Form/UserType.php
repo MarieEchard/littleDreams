@@ -90,9 +90,16 @@ class UserType extends AbstractType
 
                 // Si l'utilisateur existe déjà (modification de profil), désactiver les champs email, nomSociete et noSiret
                 if ($user && $user->getId() !== null) {
+                    $form->remove('nom');
+                    $form->remove('prenom');
+                    $form->remove('telephone');
                     $form->remove('email');
                     $form->remove('nomSociete');
                     $form->remove('noSiret');
+                    $form->remove('noRue');
+                    $form->remove('rue');
+                    $form->remove('codePostal');
+                    $form->remove('ville');
                 }
             })
 
@@ -123,11 +130,11 @@ class UserType extends AbstractType
                 'required' => false
             ])
 
-//            ->add('estAdministrateur', CheckboxType::class, [
-//                'label' => 'Créer en tant qu\'administrateur',
-//                'required' => false,
-//                'mapped' => false,
-//            ])
+            ->add('estAdmin', CheckboxType::class, [
+                'label' => 'Administrateur',
+                'required' => false,
+                'mapped' => false,
+            ])
 
             ->add('submit', SubmitType::class, [
                 'label' => 'Envoyer',

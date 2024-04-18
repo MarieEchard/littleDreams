@@ -65,8 +65,8 @@
                 <ul class="navbar-nav d-flex gap-2 ms-auto mb-2 mb-lg-0">
                     {% if is_granted('ROLE_ADMIN') %}
                         <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" href="{{ path('app_profil_creer') }}">Creer Administrateur</a></li>
-                        <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" href="{{ path('app_portfolio_creer') }}">Creer nouvelle carte</a></li>
-                        <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" href="{{ path('app_categorie_creer') }}">Ajout prestation</a></li>
+{#                        <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" href="{{ path('app_portfolio_creer') }}">Ajout nouvelle démo</a></li>#}
+{#                        <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" href="{{ path('app_categorie_creer') }}">Ajout prestation</a></li>#}
                     {% endif %}
                     {% if is_granted('IS_AUTHENTICATED') %}
                         <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" href="{{ path('app_profil', {'id' : app.user.id }) }}">Profil</a></li>

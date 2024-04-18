@@ -55,10 +55,7 @@ class UserController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-//            // Attribution du rôle ROLE_ADMIN si le champ estAdministrateur est coché
-//            if ($form->get('estAdministrateur')->getData()) {
-//                $user->setRoles(['ROLE_ADMIN']);
-//            }
+
             // Associer les questions en attente à l'utilisateur s'il y en a
             $email = $form->get('email')->getData();
             $questionsEnAttente = $em->getRepository(Question::class)->findBy(['email' => $email, 'statut' => 'en attente']);
@@ -66,6 +63,13 @@ class UserController extends AbstractController
             foreach ($questionsEnAttente as $question) {
                 $question->setUser($user);
                 $question->setStatut('associée');
+            }
+
+            // Attribution du rôle ROLE_ADMIN si le champ estAdministrateur est coché
+            if ($form->get('estAdmin')->getData()) {
+                $user->setRoles('admin');
+            } else {
+                $user->setRoles('user');
             }
 
 
