@@ -84,6 +84,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\JoinColumn(nullable: true)]
     private Collection $projets;
 
+    #[ORM\Column(length: 255)]
+    private ?string $noSiret = null;
+
     public function __construct()
     {
         $this->questions = new ArrayCollection();
@@ -357,6 +360,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if ($this->projets->removeElement($projet)) {
             $projet->removeUser($this);
         }
+
+        return $this;
+    }
+
+    public function getNoSiret(): ?string
+    {
+        return $this->noSiret;
+    }
+
+    public function setNoSiret(string $noSiret): static
+    {
+        $this->noSiret = $noSiret;
 
         return $this;
     }

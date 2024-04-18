@@ -13,6 +13,8 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\Regex;
@@ -64,11 +66,6 @@ class UserType extends AbstractType
                 'required' => false
             ])
 
-            ->add('nomSociete', TextType::class, [
-                'label' => 'Nom de votre société :',
-                'required' => false
-            ])
-
             ->add('photo', FileType::class, [
                 'required' => false,
                 'label' => 'Photo de profil :',
@@ -85,6 +82,28 @@ class UserType extends AbstractType
                         'maxSizeMessage' => "Ce fichier est trop lourd"
                     ])
                 ]
+            ])
+
+            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+                $user = $event->getData();
+                $form = $event->getForm();
+
+                // Si l'utilisateur existe déjà (modification de profil), désactiver les champs email, nomSociete et noSiret
+                if ($user && $user->getId() !== null) {
+                    $form->remove('email');
+                    $form->remove('nomSociete');
+                    $form->remove('noSiret');
+                }
+            })
+
+            ->add('nomSociete', TextType::class, [
+                'label' => 'Nom de votre société :',
+                'required' => false
+            ])
+
+            ->add('noSiret', TextType::class, [
+                'label' => 'N° de siret :',
+                'required' => false
             ])
 
             ->add('noRue', TextType::class, [
