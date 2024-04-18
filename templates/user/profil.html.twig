@@ -58,9 +58,11 @@
                         </div>
 
                         <div class="custom-profile-button">
-                            <a class="btn btn-primary" type="button"
-                               href="{{ path('app_profil_modifier', {'id': user.id }) }}"> modifier
-                            </a>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <a class="btn btn-primary" type="button"
+                                   href="{{ path('app_profil_modifier', {'id': user.id }) }}"> modifier
+                                </a>
+                            {% endif %}
 
                             <a href="{{ path('app_profil_supprimer', {'id': user.id}) }}" class="btn btn-danger"
                                onclick="return confirmDelete();">
