@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/profil', name: 'app_profil')]
@@ -33,10 +34,11 @@ class UserController extends AbstractController
     }
 
     #[Route('/creer', name: '_creer')]
-    public function creer(Request $request, EntityManagerInterface $em, SluggerInterface $slugger, UserPasswordHasherInterface $userPasswordHasher): Response
+    public function creer(Request $request, EntityManagerInterface $em, SluggerInterface $slugger, UserPasswordHasherInterface $userPasswordHasher, AuthorizationCheckerInterface $authorizationChecker): Response
     {
         $user = new User();
-        $form = $this->createForm(UserType::class, $user);
+        $estAdmin = $authorizationChecker->isGranted('ROLE_ADMIN');
+        $form = $this->createForm(UserType::class, $user, ['estAdmin' => $estAdmin]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -65,11 +67,12 @@ class UserController extends AbstractController
                 $question->setStatut('associée');
             }
 
-            // Attribution du rôle ROLE_ADMIN si le champ estAdministrateur est coché
-            if ($form->get('estAdmin')->getData()) {
-                $user->setRoles('admin');
+            // Attribution du rôle admin uniquement si l'utilisateur est un administrateur
+            if ($estAdmin && $form->get('estAdmin')->getData()) {
+                $user->setRoles(['ROLE_ADMIN']);
             } else {
-                $user->setRoles('user');
+                // Si l'utilisateur n'est pas un administrateur (ou si estAdmin n'est pas coché), attribuez uniquement le rôle ROLE_USER
+                $user->setRoles(['ROLE_USER']);
             }
 
 

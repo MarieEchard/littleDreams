@@ -84,16 +84,34 @@ class UserType extends AbstractType
                 ]
             ])
 
-            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options) {
                 $user = $event->getData();
                 $form = $event->getForm();
 
                 // Si l'utilisateur existe déjà (modification de profil), désactiver les champs email, nomSociete et noSiret
-                if ($user && $user->getId() !== null) {
+                if (($user && in_array('ROLE_USER', $user->getRoles(), true))) {
                     $form->remove('nom');
                     $form->remove('prenom');
                     $form->remove('telephone');
                     $form->remove('email');
+                    $form->remove('nomSociete');
+                    $form->remove('noSiret');
+                    $form->remove('noRue');
+                    $form->remove('rue');
+                    $form->remove('codePostal');
+                    $form->remove('ville');
+                }
+
+                // Si l'utilisateur existe déjà (modification de profil) ou n'est pas admin, désactiver le champ "estAdmin"
+                if (($user && in_array('ROLE_USER', $user->getRoles(), true)) || !$options['estAdmin']) {
+                    $form->remove('estAdmin');
+                }
+            })
+            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options) {
+                $user = $event->getData();
+                $form = $event->getForm();
+
+                if ($options['estAdmin']) {
                     $form->remove('nomSociete');
                     $form->remove('noSiret');
                     $form->remove('noRue');
@@ -153,6 +171,7 @@ class UserType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'estAdmin' => false,
         ]);
     }
 }

@@ -2,10 +2,21 @@
 
 {% form_theme form 'bootstrap_5_layout.html.twig' %}
 
-{% block title %}Inscription - LittleDreams{% endblock %}
+{% block title %}
+    {% if is_granted('ROLE_ADMIN') %}
+        Création d'administrateur - LittleDreams
+    {% else %}
+        Inscription - LittleDreams
+    {% endif %}
+{% endblock %}
 
 {% block body %}
-    <h1 class="display-6 text-center">Inscription</h1>
+    {% if is_granted('ROLE_ADMIN') %}
+        <h1 class="display-6 text-center">Création d'administrateur</h1>
+    {% else %}
+        <h1 class="display-6 text-center">Inscription</h1>
+    {% endif %}
+
 
     <div class="d-flex justify-content-center">
         <div class="border border-0 rounded p-3"
@@ -27,12 +38,17 @@
             <br>
             <hr>
             <br>
+            {% if not is_granted('ROLE_ADMIN') %}
                 {{ form_row(form.nomSociete) }}
                 {{ form_row(form.noSiret) }}
                 {{ form_row(form.noRue) }}
                 {{ form_row(form.rue) }}
                 {{ form_row(form.codePostal) }}
                 {{ form_row(form.ville) }}
+            {% endif %}
+            {% if is_granted('ROLE_ADMIN') %}
+                {{ form_row(form.estAdmin) }}
+            {% endif %}
 
             {{ form_widget(form.return) }} {{ form_widget(form.submit) }}
 
