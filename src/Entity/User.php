@@ -52,24 +52,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
 
-    #[ORM\Column(length: 100)]
-    #[Assert\NotBlank(message: 'Veuillez saisir le nom de votre société')]
+    #[ORM\Column(length: 100, nullable: true)]
     private ?string $nomSociete = null;
 
-    #[ORM\Column(length: 10)]
-    #[Assert\NotBlank(message: 'Veuillez saisir le numero de rue de votre adresse de facturation')]
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $noSiret = null;
+
+    #[ORM\Column(length: 10, nullable: true)]
     private ?string $noRue = null;
 
-    #[ORM\Column(length: 50)]
-    #[Assert\NotBlank(message: 'Veuillez saisir le nom de rue de votre adresse de facturation')]
+    #[ORM\Column(length: 50, nullable: true)]
     private ?string $rue = null;
 
-    #[ORM\Column(length: 20)]
-    #[Assert\NotBlank(message: 'Veuillez saisir le code postal de votre adresse de facturation')]
+    #[ORM\Column(length: 20, nullable: true)]
     private ?string $codePostal = null;
 
-    #[ORM\Column(length: 50)]
-    #[Assert\NotBlank(message: 'Veuillez saisir le nom de ville de votre adresse de facturation')]
+    #[ORM\Column(length: 50, nullable: true)]
     private ?string $ville = null;
 
     #[ORM\OneToMany(targetEntity: Question::class, mappedBy: 'user', orphanRemoval: true)]
@@ -84,8 +82,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\JoinColumn(nullable: true)]
     private Collection $projets;
 
-    #[ORM\Column(length: 255)]
-    private ?string $noSiret = null;
 
     public function __construct()
     {

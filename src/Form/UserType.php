@@ -17,6 +17,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
 class UserType extends AbstractType
@@ -53,17 +54,20 @@ class UserType extends AbstractType
 
 
             ->add('nom', TextType::class, [
-                'label' => 'Votre nom :',
+                'label' => 'Nom :',
                 'required' => false
             ])
             ->add('prenom', TextType::class, [
-                'label' => 'Votre prénom :',
+                'label' => 'Prénom :',
                 'required' => false
             ])
 
             ->add('telephone', TextType::class, [
                 'label' => 'Numéro de téléphone :',
-                'required' => false
+                'required' => !$options['estAdmin'],
+                'constraints' => [
+                    new NotBlank(['message' => 'Veuillez saisir votre numéro de téléphone']),
+                ],
             ])
 
             ->add('photo', FileType::class, [
@@ -118,34 +122,54 @@ class UserType extends AbstractType
                     $form->remove('rue');
                     $form->remove('codePostal');
                     $form->remove('ville');
+                    $form->remove('photo');
+                    $form->remove('telephone');
                 }
             })
 
             ->add('nomSociete', TextType::class, [
                 'label' => 'Nom de votre société :',
-                'required' => false
+                'required' => !$options['estAdmin'],
+                'constraints' => [
+                    new NotBlank(['message' => 'Veuillez saisir le nom de votre société']),
+                ],
             ])
 
             ->add('noSiret', TextType::class, [
                 'label' => 'N° de siret :',
-                'required' => false
+                'required' => !$options['estAdmin'],
+                'constraints' => [
+                    new NotBlank(['message' => 'Veuillez saisir votre numéro de Siret']),
+                ],
             ])
 
             ->add('noRue', TextType::class, [
                 'label' => 'N° Rue :',
-                'required' => false
+                'required' => !$options['estAdmin'],
+                'constraints' => [
+                    new NotBlank(['message' => 'Veuillez saisir le numéro de rue de votre adresse de facturation']),
+                ],
             ])
             ->add('rue', TextType::class, [
                 'label' => 'Rue :',
-                'required' => false
+                'required' => !$options['estAdmin'],
+                'constraints' => [
+                    new NotBlank(['message' => 'Veuillez saisir la rue de votre adresse de facturation']),
+                ],
             ])
             ->add('codePostal', TextType::class, [
                 'label' => 'Code Postal :',
-                'required' => false
+                'required' => !$options['estAdmin'],
+                'constraints' => [
+                    new NotBlank(['message' => 'Veuillez saisir le code postal de votre adresse de facturation']),
+                ],
             ])
             ->add('ville', TextType::class, [
                 'label' => 'Ville :',
-                'required' => false
+                'required' => !$options['estAdmin'],
+                'constraints' => [
+                    new NotBlank(['message' => 'Veuillez saisir le nom de ville de votre adresse de facturation']),
+                ],
             ])
 
             ->add('estAdmin', CheckboxType::class, [

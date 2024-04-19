@@ -43,11 +43,13 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            if ($form->get('photo')->getData() instanceof UploadedFile) {
-                $photoFile = $form->get('photo')->getData();
-                $fileName = $slugger->slug($user->getNom()) . '-' . uniqid() . '.' . $photoFile->guessExtension();
-                $photoFile->move($this->getParameter('photo_dir'), $fileName);
-                $user->setPhoto($fileName);
+            if ($form->has('photo')) {
+                if ($form->get('photo')->getData() instanceof UploadedFile) {
+                    $photoFile = $form->get('photo')->getData();
+                    $fileName = $slugger->slug($user->getNom()) . '-' . uniqid() . '.' . $photoFile->guessExtension();
+                    $photoFile->move($this->getParameter('photo_dir'), $fileName);
+                    $user->setPhoto($fileName);
+                }
             }
 
             // encode the plain password
