@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/profil', name: 'app_profil')]
@@ -38,7 +39,13 @@ class UserController extends AbstractController
     {
         $user = new User();
         $estAdmin = $authorizationChecker->isGranted('ROLE_ADMIN');
-        $form = $this->createForm(UserType::class, $user, ['estAdmin' => $estAdmin]);
+        $isNewUser = $user->getId() === null;
+        $form = $this->createForm(UserType::class, $user, [
+            'estAdmin' => $estAdmin,
+            'isNewUser' => $isNewUser,
+        ]);
+
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -86,18 +93,27 @@ class UserController extends AbstractController
         }
 
         return $this->render('user/creationProfil.html.twig', [
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 
     #[Route('/modifier/{id}', name: '_modifier', requirements: ['id' => '\d+'])]
-    public function update(int $id, UserRepository $userRepository, Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
+    public function update(int $id, UserRepository $userRepository, Request $request, EntityManagerInterface $em, SluggerInterface $slugger, AuthorizationCheckerInterface $authorizationChecker): Response
     {
         $user = $userRepository->find($id);
+        $currentUser = $this->getUser(); // Récupérer l'utilisateur actuellement connecté
 
-        $form = $this->createForm(UserType::class, $user);
+        $estAdmin = $authorizationChecker->isGranted('ROLE_ADMIN');
+        $canModify = $currentUser->getId() === $user->getId() || $estAdmin;
+        $estPropreProfil = $currentUser->getId() === $user->getId();
 
+        $form = $this->createForm(UserType::class, $user, [
+            'estAdmin' => $estAdmin,
+            'estPropreProfil' => $estPropreProfil,
+            'can_modify' => $canModify,
+        ]);
         $form->handleRequest($request);
+
 
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -123,8 +139,10 @@ class UserController extends AbstractController
         }
 
         return $this->render('user/modifierProfil.html.twig', [
-            'form' => $form,
-            'user' => $user
+            'form' => $form->createView(),
+            'user' => $user,
+            'estPropreProfil' => $estPropreProfil,
+            'estAdmin' => $estAdmin,
         ]);
     }
 

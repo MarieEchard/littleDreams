@@ -2,11 +2,11 @@
 
 {% form_theme form 'bootstrap_5_layout.html.twig' %}
 
-{% block title %}modifiet mon profil - LittleDreams{% endblock %}
+{% block title %}modifier le profil - LittleDreams{% endblock %}
 
 {% block body %}
 
-    <h1 class="display-6 text-center">Modifier mon profil</h1>
+    <h1 class="display-6 text-center">Modifier le profil</h1>
 
     <div class="d-flex justify-content-center">
         <div class="border border-0 rounded p-3"
@@ -16,40 +16,62 @@
                 background-color: rgba(255,255,255,0.16);
                 "
         >
-            {{ form_start(form) }}
-            {% if is_granted("ROLE_ADMIN") %}
-                {{ form_row(form.nom) }}
-                {{ form_row(form.prenom) }}
-                {{ form_row(form.telephone) }}
-            {% endif %}
-            <p class="card-text">Nom : {{ user.nom }}</p>
-            <p class="card-text">Prenom : {{ user.prenom }}</p>
-            <p class="card-text">Téléphone : {{ user.telephone }}</p>
-            <p class="card-text">Email : {{ user.email }}</p>
-            {{ form_row(form.plainPassword) }}
-            {{ form_row(form.photo) }}
-            <p class="card-text">Nom de société : {{ user.nomSociete }}</p>
-            <p class="card-text">N° de Siret : {{ user.noSiret }}</p>
-            <p class="card-text">N° de rue : {{ user.noRue }}</p>
-            <p class="card-text">Rue : {{ user.rue }}</p>
-            <p class="card-text">Code Postal : {{ user.codePostal }}</p>
-            <p class="card-text">Ville : {{ user.ville }}</p>
 
-            <p class="card-text"> Si vous souhaitez modifier une information<br> verrouillée, veuillez contacter <a href="#"> un administrateur</a>.</p>
-            {% if is_granted("ROLE_ADMIN") %}
+            {{ form_start(form) }}
+
+            {# Affichage des champs communs à tous les utilisateurs #}
+            {{ form_row(form.nom) }}
+            {{ form_row(form.prenom) }}
+            {{ form_row(form.email) }}
+            {{ form_row(form.telephone) }}
+
+            {% if estPropreProfil %}
+                {# Affichage des champs spécifiques au propre profil de l'utilisateur #}
+                {{ form_row(form.plainPassword.first) }}
+                {{ form_row(form.plainPassword.second) }}
+                {{ form_row(form.photo) }}
+            {% endif %}
+
+            {% if estAdmin and not estPropreProfil %}
+                {# Affichage des champs spécifiques lors de la modification du profil d'un autre utilisateur par un administrateur #}
+                {{ form_row(form.nomSociete) }}
+                {{ form_row(form.noSiret) }}
                 {{ form_row(form.noRue) }}
                 {{ form_row(form.rue) }}
                 {{ form_row(form.codePostal) }}
                 {{ form_row(form.ville) }}
-                {{ form_row(form.estAdmin) }}
             {% endif %}
 
-
-            {{ form_widget(form.return) }} {{ form_widget(form.submit) }}
+            {# Boutons de soumission et de retour #}
+            {{ form_row(form.submit) }}
+            {{ form_row(form.return) }}
 
             {{ form_end(form) }}
+{#            {{ form_start(form) }}#}
+{#                <div class="card-text-custom">#}
+{#                    #}
 
+{#                    <p class="card-text">Nom : {{ user.nom }}</p>#}
+{#                    <p class="card-text">Prenom : {{ user.prenom }}</p>#}
+{#                    <p class="card-text">Téléphone : {{ user.telephone }}</p>#}
+{#                    <p class="card-text">Email : {{ user.email }}</p>#}
+{#                    <hr>#}
+{#                    <p class="card-text">Nom de société : {{ user.nomSociete }}</p>#}
+{#                    <p class="card-text">N° de Siret : {{ user.noSiret }}</p>#}
+{#                    <p class="card-text">N° de rue : {{ user.noRue }}</p>#}
+{#                    <p class="card-text">Rue : {{ user.rue }}</p>#}
+{#                    <p class="card-text">Code Postal : {{ user.codePostal }}</p>#}
+{#                    <p class="card-text">Ville : {{ user.ville }}</p>#}
+
+{#                </div>#}
+{#                <div class="custom-profile-button">#}
+
+{#                    {{ form_widget(form.return) }} {{ form_widget(form.submit) }}#}
+
+{#                </div>#}
+{#            {{ form_end(form) }}#}
         </div>
     </div>
 
 {% endblock %}
+

@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}services - LittleDreams{% endblock %}
+
+{% block body %}
+    <div class="background">
+        <img src="{{ asset('img/MainIAv2.png') }}" alt="image IA" style="height: 100%; width: 100%">
+    </div>
+    <div class="container d-flex justify-content-center">
+        <div class="background">
+            <img src="{{ asset('img/TechBleu.png') }}" alt="image IA" style="height: 100%; width: 100%">
+        </div>
+        <div class="mb-3 custom-card-profile">
+            <div class="row g-0">
+                <div class="col-md-4 custom-sidebar">
+                    <ul>
+                        <li><a href="#">Portfolio</a></li>
+                        <hr>
+                        <li>Services</li>
+                        <hr>
+                        <li><a href="#">réponses</a></li>
+                        <hr>
+                        <li><a href="#">validation devis</a></li>
+                        <hr>
+                        <li><a href="#">validation rendez-vous</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-8">
+                    <div class="card-header card-header-custom" ><h5 class="card-title">Services proposés</h5></div>
+                    <div class="card-body">
+
+                        {% for categorie in categories %}
+
+                            <div class="card-text-custom">
+                                <p class="card-text">service proposé : {{ categorie.nom}}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
