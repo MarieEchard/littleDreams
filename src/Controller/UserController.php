@@ -88,8 +88,14 @@ class UserController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('success', 'Inscription réussi, veuillez vous connecter');
-            return $this->redirectToRoute('app_login');
+            if ($estAdmin) {
+                $this->addFlash('success', 'Création de l\'administrateur réussi !');
+                return $this->redirectToRoute('app_littledreams');
+            } else {
+                $this->addFlash('success', 'Inscription réussi, veuillez vous connecter');
+                return $this->redirectToRoute('app_login');
+            }
+
         }
 
         return $this->render('user/creationProfil.html.twig', [
