@@ -2,11 +2,20 @@
 
 {% form_theme form 'bootstrap_5_layout.html.twig' %}
 
-{% block title %}modifier le profil - LittleDreams{% endblock %}
+{% block title %}
+    {% if is_granted('ROLE_ADMIN') %}
+        Modification du profil - LittleDreams
+    {% else %}
+        Modification de votre Profil - LittleDreams
+    {% endif %}
+{% endblock %}
 
 {% block body %}
-
-    <h1 class="display-6 text-center">Modifier le profil</h1>
+    {% if is_granted('ROLE_ADMIN') %}
+        <h1 class="display-6 text-center">Modification du Profil</h1>
+    {% else %}
+        <h1 class="display-6 text-center">Modification de votre Profil</h1>
+    {% endif %}
 
     <div class="d-flex justify-content-center">
         <div class="border border-0 rounded p-3"
@@ -19,57 +28,47 @@
 
             {{ form_start(form) }}
 
-            {# Affichage des champs communs à tous les utilisateurs #}
-            {{ form_row(form.nom) }}
-            {{ form_row(form.prenom) }}
-            {{ form_row(form.email) }}
-            {{ form_row(form.telephone) }}
-
             {% if estPropreProfil %}
-                {# Affichage des champs spécifiques au propre profil de l'utilisateur #}
-                {{ form_row(form.plainPassword.first) }}
-                {{ form_row(form.plainPassword.second) }}
-                {{ form_row(form.photo) }}
+                {% if estAdmin %}
+                    {{ form_row(form.nom) }}
+                    {{ form_row(form.prenom) }}
+                    {{ form_row(form.email) }}
+                    {{ form_row(form.telephone) }}
+                    {{ form_row(form.plainPassword) }}
+                    {{ form_row(form.photo) }}
+                {% else %}
+                    {{ form_row(form.nom) }}
+                    {{ form_row(form.prenom) }}
+                    {{ form_row(form.email) }}
+                    {{ form_row(form.telephone) }}
+                    {{ form_row(form.plainPassword) }}
+                    {{ form_row(form.photo) }}
+                    {{ form_row(form.noRue) }}
+                    {{ form_row(form.rue) }}
+                    {{ form_row(form.codePostal) }}
+                    {{ form_row(form.ville) }}
+                {% endif %}
+            {% else %}
+                {% if estAdmin %}
+                    {% if userRoles == ['ROLE_USER'] %}
+                        {{ form_row(form.nom) }}
+                        {{ form_row(form.prenom) }}
+                        {{ form_row(form.email) }}
+                        {{ form_row(form.nomSociete) }}
+                        {{ form_row(form.noSiret) }}
+                    {% elseif userRoles == ['ROLE_ADMIN']%}
+                        {{ form_row(form.nom) }}
+                        {{ form_row(form.prenom) }}
+                        {{ form_row(form.email) }}
+{#                        {{ form_row(form.estAdmin) }}#}
+                    {% endif %}
+                {% endif %}
             {% endif %}
 
-            {% if estAdmin and not estPropreProfil %}
-                {# Affichage des champs spécifiques lors de la modification du profil d'un autre utilisateur par un administrateur #}
-                {{ form_row(form.nomSociete) }}
-                {{ form_row(form.noSiret) }}
-                {{ form_row(form.noRue) }}
-                {{ form_row(form.rue) }}
-                {{ form_row(form.codePostal) }}
-                {{ form_row(form.ville) }}
-            {% endif %}
-
-            {# Boutons de soumission et de retour #}
-            {{ form_row(form.submit) }}
-            {{ form_row(form.return) }}
+            {{ form_widget(form.submit) }} {{ form_widget(form.return) }}
 
             {{ form_end(form) }}
-{#            {{ form_start(form) }}#}
-{#                <div class="card-text-custom">#}
-{#                    #}
 
-{#                    <p class="card-text">Nom : {{ user.nom }}</p>#}
-{#                    <p class="card-text">Prenom : {{ user.prenom }}</p>#}
-{#                    <p class="card-text">Téléphone : {{ user.telephone }}</p>#}
-{#                    <p class="card-text">Email : {{ user.email }}</p>#}
-{#                    <hr>#}
-{#                    <p class="card-text">Nom de société : {{ user.nomSociete }}</p>#}
-{#                    <p class="card-text">N° de Siret : {{ user.noSiret }}</p>#}
-{#                    <p class="card-text">N° de rue : {{ user.noRue }}</p>#}
-{#                    <p class="card-text">Rue : {{ user.rue }}</p>#}
-{#                    <p class="card-text">Code Postal : {{ user.codePostal }}</p>#}
-{#                    <p class="card-text">Ville : {{ user.ville }}</p>#}
-
-{#                </div>#}
-{#                <div class="custom-profile-button">#}
-
-{#                    {{ form_widget(form.return) }} {{ form_widget(form.submit) }}#}
-
-{#                </div>#}
-{#            {{ form_end(form) }}#}
         </div>
     </div>
 

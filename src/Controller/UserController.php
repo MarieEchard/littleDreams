@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Question;
 use App\Entity\User;
+use App\Form\ModifUserType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -108,35 +109,37 @@ class UserController extends AbstractController
     {
         $user = $userRepository->find($id);
         $currentUser = $this->getUser(); // Récupérer l'utilisateur actuellement connecté
+        $userRoles = $user->getRoles();
 
         $estAdmin = $authorizationChecker->isGranted('ROLE_ADMIN');
-        $canModify = $currentUser->getId() === $user->getId() || $estAdmin;
-        $estPropreProfil = $currentUser->getId() === $user->getId();
+        $estPropreProfil = $currentUser === $user;
 
-        $form = $this->createForm(UserType::class, $user, [
+        $form = $this->createForm(ModifUserType::class, $user, [
             'estAdmin' => $estAdmin,
             'estPropreProfil' => $estPropreProfil,
-            'can_modify' => $canModify,
+            'user' => $user,
+            'userRoles' => $userRoles,
         ]);
         $form->handleRequest($request);
 
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            if ($form->get('photo')->getData() instanceof UploadedFile) {
-                $dir = $this->getParameter('photo_dir');
-                $photoFile = $form->get('photo')->getData();
-                $fileName = $slugger->slug($user->getNom()) . '-' . uniqid() . '.' . $photoFile->guessExtension();
-                $photoFile->move($dir, $fileName);
+            if ($form->has('photo')) {
+                if ($form->get('photo')->getData() instanceof UploadedFile) {
+                    $dir = $this->getParameter('photo_dir');
+                    $photoFile = $form->get('photo')->getData();
+                    $fileName = $slugger->slug($user->getNom()) . '-' . uniqid() . '.' . $photoFile->guessExtension();
+                    $photoFile->move($dir, $fileName);
 
-                if ($user->getPhoto() && \file_exists($dir . '/' . $user->getPhoto())) {
-                    unlink($dir . '/' . $user->getPhoto());
+                    if ($user->getPhoto() && \file_exists($dir . '/' . $user->getPhoto())) {
+                        unlink($dir . '/' . $user->getPhoto());
+                    }
+
+                    $user->setPhoto($fileName);
+
                 }
-
-                $user->setPhoto($fileName);
-
             }
-
             $em->persist($user);
             $em->flush();
 
@@ -149,6 +152,8 @@ class UserController extends AbstractController
             'user' => $user,
             'estPropreProfil' => $estPropreProfil,
             'estAdmin' => $estAdmin,
+            'userRoles' => $userRoles,
+
         ]);
     }
 
