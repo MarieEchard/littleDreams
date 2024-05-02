@@ -25,7 +25,7 @@ class RendezVous
 
 
     #[ORM\ManyToOne(inversedBy: 'rendezVous')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Projet $projet = null;
 
     #[ORM\ManyToOne(inversedBy: 'rendezVous')]
