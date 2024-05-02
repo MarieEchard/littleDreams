@@ -31,6 +31,10 @@ class Projet
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $documents = null;
 
+    #[ORM\Column(length: 50)]
+    private string $statut;
+
+
     #[ORM\ManyToOne(inversedBy: 'projets')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Categorie $categorie = null;
@@ -206,6 +210,18 @@ class Projet
     public function setResteAPayer(float $resteAPayer): static
     {
         $this->resteAPayer = $resteAPayer;
+
+        return $this;
+    }
+
+    public function getStatut(): string
+    {
+        return $this->statut;
+    }
+
+    public function setStatut(string $statut): static
+    {
+        $this->statut = $statut;
 
         return $this;
     }
