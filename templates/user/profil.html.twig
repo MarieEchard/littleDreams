@@ -22,7 +22,7 @@
                             <hr>
                             <li><a href="#">Repondre aux questions</a></li>
                             <hr>
-                            <li><a href="#">validation rendez vous</a></li>
+                            <li><a href="{{ path('app_rendezvous_validation_liste') }}">validation rendez vous</a></li>
                             <hr>
                             <li><a href="#">validation devis</a></li>
                             <hr>
@@ -36,7 +36,7 @@
                             <hr>
                             <li><a href="{{ path('app_mes-questions') }}">Mes questions</a></li>
                             <hr>
-                            <li><a href="#">Mes rendez-vous</a></li>
+                            <li><a href="{{ path('app_rendezvous_personnels', {'id': app.user.id }) }}">Mes rendez-vous</a></li>
                             <hr>
                             <li><a href="#">Mes demandes de devis</a></li>
                             <hr>

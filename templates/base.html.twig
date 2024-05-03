@@ -69,8 +69,8 @@
                     {% if is_granted('IS_AUTHENTICATED') %}
                         {% if not is_granted('ROLE_ADMIN') %}
                             <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" href="{{ path('app_profil', {'id' : app.user.id }) }}">Profil</a></li>
-                            <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" href="{{ path('app_rendezvous') }}">rendez-vous</a></li>
-                            <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" href="{{ path('app_devis') }}">Devis</a></li>
+                            <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" href="{{ path('app_rendezvous_demande') }}">rendez-vous</a></li>
+                            <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" href="{{ path('app_devis_demande') }}">Devis</a></li>
                         {% endif %}
 
                         <li class="btn btn-sm btn-outline-danger"><a class="nav-link" href="{{ path('app_logout') }}">Deconnexion</a></li>
