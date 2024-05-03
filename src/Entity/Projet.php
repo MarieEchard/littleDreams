@@ -19,10 +19,10 @@ class Projet
     #[ORM\Column]
     private ?float $budget = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $dateDebut = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $dateFin = null;
 
     #[ORM\Column(length: 255)]
@@ -43,19 +43,20 @@ class Projet
     #[ORM\OneToMany(targetEntity: RendezVous::class, mappedBy: 'projet', orphanRemoval: true)]
     private Collection $rendezVous;
 
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'projets')]
-    private Collection $users;
 
-    #[ORM\Column]
+
+    #[ORM\Column(nullable: true)]
     private ?float $paiements = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?float $resteAPayer = null;
+
+    #[ORM\ManyToOne(inversedBy: 'projets')]
+    private ?User $user = null;
 
     public function __construct()
     {
         $this->rendezVous = new ArrayCollection();
-        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -166,30 +167,6 @@ class Projet
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getUser(): Collection
-    {
-        return $this->users;
-    }
-
-    public function addUser(User $users): static
-    {
-        if (!$this->users->contains($users)) {
-            $this->users->add($users);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $users): static
-    {
-        $this->users->removeElement($users);
-
-        return $this;
-    }
-
     public function getPaiements(): ?float
     {
         return $this->paiements;
@@ -222,6 +199,18 @@ class Projet
     public function setStatut(string $statut): static
     {
         $this->statut = $statut;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

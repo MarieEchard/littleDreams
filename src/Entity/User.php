@@ -78,10 +78,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\JoinColumn(nullable: true)]
     private Collection $rendezVous;
 
-    #[ORM\ManyToMany(targetEntity: Projet::class, inversedBy: 'users')]
-    #[ORM\JoinColumn(nullable: true)]
+    #[ORM\OneToMany(targetEntity: Projet::class, mappedBy: 'user')]
     private Collection $projets;
-
 
     public function __construct()
     {
@@ -331,6 +329,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+
+
+    public function getNoSiret(): ?string
+    {
+        return $this->noSiret;
+    }
+
+    public function setNoSiret(string $noSiret): static
+    {
+        $this->noSiret = $noSiret;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Projet>
      */
@@ -343,7 +355,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->projets->contains($projet)) {
             $this->projets->add($projet);
-            $projet->addUser($this);
+            $projet->setUser($this);
         }
 
         return $this;
@@ -352,20 +364,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeProjet(Projet $projet): static
     {
         if ($this->projets->removeElement($projet)) {
-            $projet->removeUser($this);
+            // set the owning side to null (unless already changed)
+            if ($projet->getUser() === $this) {
+                $projet->setUser(null);
+            }
         }
-
-        return $this;
-    }
-
-    public function getNoSiret(): ?string
-    {
-        return $this->noSiret;
-    }
-
-    public function setNoSiret(string $noSiret): static
-    {
-        $this->noSiret = $noSiret;
 
         return $this;
     }

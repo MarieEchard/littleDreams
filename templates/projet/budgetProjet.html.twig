@@ -13,7 +13,13 @@
         <div class="d-flex justify-content-center">
             <div class="border border-0 rounded p-4 form-custom">
                 <h3 class="display-6 text-center">Demander un Devis</h3>
+                {{ form_start(form) }}
+                {{ form_row(form.budget) }}
+                {{ form_row(form.categorie) }}
+                {{ form_row(form.details) }}
 
+                {{ form_widget(form.submit) }} {{ form_widget(form.return) }}
+                {{ form_end(form) }}
             </div>
         </div>
     </form>
