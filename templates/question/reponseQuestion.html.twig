@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}services - LittleDreams{% endblock %}
+
+{% block body %}
+    <div class="container d-flex justify-content-center">
+        <div class="background">
+            <img src="{{ asset('img/TechBleu.png') }}" alt="image IA" style="height: 100%; width: 100%">
+        </div>
+        <div class="mb-3 custom-card-profile">
+            <div class="row g-0">
+                <div class="col-md-4 custom-sidebar">
+                    <ul>
+                        <li><a href="{{ path('app_profil', {'id' : app.user.id }) }}">Mon Profil</a></li>
+                        <hr>
+                        <li><a href="{{ path('app_profil_creer') }}">Créer un administrateur</a></li>
+                        <hr>
+                        <li><a href="{{ path('app_services') }}">gestion des services</a></li>
+                        <hr>
+                        <li><a href="#">Gestion Portfolio</a></li>
+                        <hr>
+                        <li><a href="#">Repondre aux questions</a></li>
+                        <hr>
+                        <li>validation rendez vous</li>
+                        <hr>
+                        <li><a href="#">validation devis</a></li>
+                        <hr>
+                        <li><a href="#">validation projets</a></li>
+                        <hr>
+                        <li><a href="#">projets en cours</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-8">
+                    <div class="card-header card-header-custom text-center">
+                        <h5 class="card-title mb-0">Liste projets en cours</h5>
+                    </div>
+                    <div class="card-body">
+                        {% if questionForms is not empty %}
+                            {% for form in questionForms %}
+                                {% set question = form.vars.data %}
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="card-text-custom">
+                                            <p class="card-text">Date : {{ question.date|date('Y-m-d H:i:s') }}</p>
+                                            <p class="card-text">Utilisateur : {{ question.email }}</p>
+                                            <p class="card-text">Question : {{ question.question }}</p>
+                                            {{ form_start(form, {'attr': {'id': 'form_' ~ form.vars.id}}) }}
+                                            {{ form_row(form.reponse) }}
+                                            {{ form_row(form.submit) }}
+                                            {{ form_end(form) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <p>Aucune question pour le moment.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

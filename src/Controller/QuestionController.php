@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Question;
 use App\Form\QuestionType;
+use App\Form\ResponseType;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -58,6 +59,37 @@ class QuestionController extends AbstractController
         // Rendre la vue Twig en transmettant les questions à afficher
         return $this->render('question/mesQuestions.html.twig', [
             'questions' => $questions,
+        ]);
+    }
+
+    #[Route('/question/reponse', name: 'app_question_reponse')]
+    public function repondreQuestions(EntityManagerInterface $em, Request $request): Response
+    {
+        // Obtenez l'utilisateur actuel
+        $user = $this->getUser();
+
+        // Obtenez les rôles de l'utilisateur
+        $userRoles = $user ? $user->getRoles() : [];
+        $questions = $em->getRepository(Question::class)->findBy(['reponse' => null]);
+
+        $questionForms = [];
+        foreach ($questions as $question) {
+            $form = $this->createForm(QuestionType::class, $question, ['user_roles' => $userRoles]);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                $em->flush();
+
+                $this->addFlash('success', 'La réponse à été envoyée !');
+                return $this->redirectToRoute('app_question_reponse');
+            }
+
+            $questionForms[] = $form->createView();
+        }
+
+        return $this->render('question/reponseQuestion.html.twig', [
+            'questionForms' => $questionForms,
         ]);
     }
 
