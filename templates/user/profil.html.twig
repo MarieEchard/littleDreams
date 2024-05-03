@@ -24,11 +24,9 @@
                             <hr>
                             <li><a href="{{ path('app_rendezvous_validation_liste') }}">validation rendez vous</a></li>
                             <hr>
-                            <li><a href="#">validation devis</a></li>
+                            <li><a href="{{ path('app_devis_validation_liste') }}">validation devis</a></li>
                             <hr>
-                            <li><a href="#">validation projets</a></li>
-                            <hr>
-                            <li><a href="#">projets en cours</a></li>
+                            <li><a href="{{ path('app_projet_valides') }}">projets en cours</a></li>
                         </ul>
                     {% else %}
                         <ul>
@@ -38,9 +36,7 @@
                             <hr>
                             <li><a href="{{ path('app_rendezvous_personnels', {'id': app.user.id }) }}">Mes rendez-vous</a></li>
                             <hr>
-                            <li><a href="#">Mes demandes de devis</a></li>
-                            <hr>
-                            <li><a href="#">Mes projets</a></li>
+                            <li><a href="{{ path('app_devis_mesprojets', {'id': app.user.id }) }}">Mes projets</a></li>
                         </ul>
                     {% endif %}
                 </div>

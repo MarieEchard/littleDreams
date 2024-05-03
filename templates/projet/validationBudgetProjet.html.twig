@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}services - LittleDreams{% endblock %}
+
+{% block body %}
+    <div class="container d-flex justify-content-center">
+        <div class="background">
+            <img src="{{ asset('img/TechBleu.png') }}" alt="image IA" style="height: 100%; width: 100%">
+        </div>
+        <div class="mb-3 custom-card-profile">
+            <div class="row g-0">
+                <div class="col-md-4 custom-sidebar">
+                    <ul>
+                        <li><a href="{{ path('app_profil', {'id' : app.user.id }) }}">Mon Profil</a></li>
+                        <hr>
+                        <li><a href="{{ path('app_profil_creer') }}">Créer un administrateur</a></li>
+                        <hr>
+                        <li><a href="{{ path('app_services') }}">gestion des services</a></li>
+                        <hr>
+                        <li><a href="#">Gestion Portfolio</a></li>
+                        <hr>
+                        <li><a href="#">Repondre aux questions</a></li>
+                        <hr>
+                        <li>validation rendez vous</li>
+                        <hr>
+                        <li><a href="#">validation devis</a></li>
+                        <hr>
+                        <li><a href="#">validation projets</a></li>
+                        <hr>
+                        <li><a href="#">projets en cours</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-8">
+                    <div class="card-header card-header-custom text-center">
+                        <h5 class="card-title mb-0">Liste devis proposés</h5>
+                    </div>
+                    <div class="card-body">
+                        {% if projetEnAttente is not empty %}
+                            <ul>
+                                {% for projet in projetEnAttente %}
+                                    <li>
+                                        <strong>Nom de l'utilisateur:</strong> {{ projet.getUser().getNom() }}<br>
+                                        <strong>Prénom de l'utilisateur:</strong> {{ projet.getUser().getPrenom() }}<br>
+                                        <strong>Email:</strong> {{ projet.getUser().getEmail() }}<br>
+                                        <strong>Numéro de téléphone:</strong> {{ projet.getUser().getTelephone() }}<br>
+                                        <strong>Budget:</strong> {{ projet.getBudget() }}<br>
+                                        <strong>Catégorie:</strong> {{ projet.getCategorie().getNomCategorie() }}<br>
+                                        <strong>Détails:</strong> {{ projet.getDetails() }}<br>
+                                        <form action="{{ path('app_devis_valider', {'id': projet.id}) }}" method="post" class="d-inline">
+                                            <button type="submit" class="btn btn-success btn-sm">Valider</button>
+                                        </form>
+                                        <form action="{{ path('app_devis_refus', {'id': projet.id}) }}" method="post" class="d-inline">
+                                            <button type="submit" class="btn btn-danger btn-sm">Refuser</button>
+                                        </form>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>Aucune demande de devis en attente.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

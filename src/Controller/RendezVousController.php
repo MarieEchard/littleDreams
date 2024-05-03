@@ -86,7 +86,7 @@ class RendezVousController extends AbstractController
         return $this->redirectToRoute('app_rendezvous_validation_liste');
     }
 
-    #[Route('/personnels//{id}', name: '_personnels')]
+    #[Route('/personnels/{id}', name: '_personnels')]
     public function mesRendezvous(int $id, EntityManagerInterface $em): Response
     {
 

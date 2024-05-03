@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil - LittleDreams{% endblock %}
+
+{% block body %}
+    <div class="container d-flex justify-content-center">
+        <div class="background">
+            <img src="{{ asset('img/TechBleu.png') }}" alt="image IA" style="height: 100%; width: 100%">
+        </div>
+        <div class="mb-3 custom-card-profile">
+            <div class="row g-0">
+                <div class="col-md-4 custom-sidebar">
+                    <ul>
+                        <li><a href="{{ path('app_profil', {'id' : app.user.id }) }}"> Mon Profil</a></li>
+                        <hr>
+                        <li><a href="{{ path('app_mes-questions') }}">Mes questions</a></li>
+                        <hr>
+                        <li>Mes rendez-vous</li>
+                        <hr>
+                        <li><a href="#">Mes demandes de devis</a></li>
+                        <hr>
+                        <li><a href="#">Mes projets</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-8">
+                    <div class="card-header card-header-custom" ><h5 class="card-title">Mes Projets</h5></div>
+                    <div class="card-body">
+
+                        {% if projetUtilisateur is not empty %}
+                            {% for projet in projetUtilisateur %}
+                                <div class="card-text-custom">
+                                    <strong>Nom de l'utilisateur:</strong> {{ projet.getUser().getNom() }}<br>
+                                    <strong>Prénom de l'utilisateur:</strong> {{ projet.getUser().getPrenom() }}<br>
+                                    <strong>Email:</strong> {{ projet.getUser().getEmail() }}<br>
+                                    <strong>Numéro de téléphone:</strong> {{ projet.getUser().getTelephone() }}<br>
+                                    <strong>Budget:</strong> {{ projet.getBudget() }}<br>
+                                    <strong>Catégorie:</strong> {{ projet.getCategorie().getNomCategorie() }}<br>
+                                    <strong>Détails:</strong> {{ projet.getDetails() }}<br>
+                                    {% if projet.dateDebut is not null %}
+                                        <strong>Date de début:</strong> {{ projet.dateDebut|date('Y-m-d') }}<br>
+                                    {% endif %}
+
+                                    {% if projet.dateFin is not null %}
+                                        <strong>Date de fin:</strong> {{ projet.dateFin|date('Y-m-d') }}<br>
+                                    {% endif %}
+
+                                    {% if projet.resteAPayer is not null %}
+                                        <strong>Reste à payer:</strong> {{ projet.resteAPayer }}<br>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <p>Aucun projet validé par l'administrateur pour le moment.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
