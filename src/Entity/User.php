@@ -78,14 +78,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\JoinColumn(nullable: true)]
     private Collection $rendezVous;
 
-    #[ORM\OneToMany(targetEntity: Projet::class, mappedBy: 'user')]
-    private Collection $projets;
+
 
     public function __construct()
     {
         $this->questions = new ArrayCollection();
         $this->rendezVous = new ArrayCollection();
-        $this->projets = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -343,33 +341,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Projet>
-     */
-    public function getProjets(): Collection
-    {
-        return $this->projets;
-    }
 
-    public function addProjet(Projet $projet): static
-    {
-        if (!$this->projets->contains($projet)) {
-            $this->projets->add($projet);
-            $projet->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProjet(Projet $projet): static
-    {
-        if ($this->projets->removeElement($projet)) {
-            // set the owning side to null (unless already changed)
-            if ($projet->getUser() === $this) {
-                $projet->setUser(null);
-            }
-        }
-
-        return $this;
-    }
 }
