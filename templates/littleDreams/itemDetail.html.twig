@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Création d'item - LittleDreams
+{% endblock %}
+
+{% block body %}
+    <div class="d-flex justify-content-center">
+        <div class="m-2 card">
+            <div class="card-body">
+                <img src="{{ asset(photo_dir ~ '/' ~ item.photo) }}" class="card-img-top" alt="image" loading="lazy"/>
+                <h5 class="card-title">{{ item.nom }}</h5>
+                <p class="card-text">{{ item.objectifClient }}</p>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a type="button" class="btn btn-danger"
+                       href="{{ path('app_portfolio_supprimer_item', {'id': item.id}) }}"
+                       onclick="return confirm('Etes-vous sûr de vouloir supprimer l\'affichage du projet ?')">
+                        <span class="d-none d-md-inline">Supprimer</span>
+                        <i class="bi bi-trash d-md-none"></i>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

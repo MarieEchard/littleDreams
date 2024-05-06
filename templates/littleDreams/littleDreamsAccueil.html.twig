@@ -12,31 +12,12 @@
 
 
     <div class="d-flex flex-wrap justify-content-center">
-        {% for itemPortfolio in itemPortfolios %}
-            <a class="card-link" href="{{ path('app_itemPortfolio_detail', {'id': itemPortfolio.id}) }}">
-                <div class="m-2 card" style="width: 50rem;">
-                    {% if projet.photo %}
-                        <img src="{{ asset(photo_dir ~ '/' ~ projet.photo) }}" class="card-img-top" alt="image"
-                             loading="lazy"/>
-                    {% else %}
-                        <img src="{{ asset(photo_dir ~ '/placeholder_img.png') }}" class="card-img-top" alt="image"
-                             loading="lazy"/>
-                    {% endif %}
+        {% for item in portfolioItems %}
+            <a class="card-link" href="{{ path('app_itemPortfolio_detail', {'id': item.id}) }}">
+                <div class="m-2 card" >
                     <div class="card-body">
-                        <h5 class="card-title">{{ itemPortfolio.nom }}</h5>
-                        <div class="pt-3">
-                            {% if is_granted('ROLE_ADMIN') %}
-                                <a class="btn btn-primary" type="button"
-                                    href="{{ path('app_itemPortfolio_update', {'id': itemPortfolio.id }) }}">
-                                    <i class="bi bi-feather"></i>
-                                </a>
-                                <a type="button" class="btn btn-danger"
-                                    href="{{ path('app_itemPortfolio_delete', {'id':itemPortfolio.id}) }}"
-                                    onclick="return confirm('Etes-vous sûr de vouloir supprimer l\'affichage du projet ?')">
-                                    <i class="bi bi-trash"></i>
-                                </a>
-                            {% endif %}
-                        </div>
+                        <img src="{{ asset(photo_dir ~ '/' ~ item.photo) }}" class="card-img-top" alt="image" loading="lazy"/>
+                        <h5 class="card-title">{{ item.nom }}</h5>
                     </div>
                 </div>
             </a>
