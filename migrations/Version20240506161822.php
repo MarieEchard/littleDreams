@@ -20,8 +20,7 @@ final class Version20240506161822 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('DROP INDEX IDX_50159CA9A76ED395 ON projet');
-        $this->addSql('ALTER TABLE projet DROP user_id');
+        $this->addSql('DROP TABLE user_projet');
 
     }
 
