@@ -53,7 +53,10 @@ class QuestionType extends AbstractType
                 ]
             ]);
         if (in_array('ROLE_ADMIN', $options['user_roles'])) {
-            $builder->add('reponse', TextareaType::class, [
+            $builder
+                ->remove('email')
+                ->remove('question')
+                ->add('reponse', TextareaType::class, [
                 'label' => 'Réponse à la question :',
                 'required' => false,
                 'attr' => ['class' => 'form-control', 'rows' => 8]

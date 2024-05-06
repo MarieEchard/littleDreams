@@ -24,6 +24,9 @@ class ItemPortfolio
     #[ORM\ManyToMany(targetEntity: Categorie::class, inversedBy: 'itemPortfolios')]
     private Collection $categories;
 
+    #[ORM\Column(length: 255)]
+    private ?string $photo = null;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -78,6 +81,18 @@ class ItemPortfolio
     public function removeCategory(Categorie $category): static
     {
         $this->categories->removeElement($category);
+
+        return $this;
+    }
+
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(string $photo): static
+    {
+        $this->photo = $photo;
 
         return $this;
     }

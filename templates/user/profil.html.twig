@@ -12,7 +12,7 @@
                 <div class="col-md-4 custom-sidebar">
                     {% if is_granted('ROLE_ADMIN') %}
                         <ul>
-                            <li>Mon Profil</li>
+                            <li><a href="{{ path('app_profil', {'id' : app.user.id }) }}"> Mon Profil</a></li>
                             <hr>
                             <li><a href="{{ path('app_profil_creer') }}">Créer un administrateur</a></li>
                             <hr>
