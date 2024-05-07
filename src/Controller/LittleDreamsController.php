@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Entity\ItemPortfolio;
 use App\Form\ItemPortfolioType;
+use App\Repository\CategorieRepository;
 use App\Repository\ItemPortfolioRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,13 +18,15 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class LittleDreamsController extends AbstractController
 {
     #[Route('/', name: 'app_littledreams')]
-    public function index(ItemPortfolioRepository $itemPortfolioRepository): Response
+    public function index(ItemPortfolioRepository $itemPortfolioRepository, CategorieRepository $categoryRepository): Response
     {
         // Récupérer tous les ItemPortfolio
         $portfolioItems = $itemPortfolioRepository->findAll();
+        $categories = $categoryRepository->findAll();
 
         return $this->render('littleDreams/littleDreamsAccueil.html.twig', [
             'portfolioItems' => $portfolioItems,
+            'categories' => $categories,
         ]);
     }
 

@@ -10,12 +10,18 @@
         </div>
     </header>
 
-
+    <div class="rounded-bottom shadow-sm p-4 text-center bg-body-tertiary card-background"
+         style="
+            background-image: url('https://mdbcdn.b-cdn.net/img/new/slides/040.webp');
+            ">
+        <h1 class="display-6 text-center"> PORTFOLIO</h1>
+    </div>
     <div class="d-flex flex-wrap justify-content-center">
+
         {% for item in portfolioItems %}
             <a class="card-link" href="{{ path('app_itemPortfolio_detail', {'id': item.id}) }}">
                 <div class="m-2 card" >
-                    <div class="card-body">
+                    <div class="card-body card-body-custom">
                         <img src="{{ asset(photo_dir ~ '/' ~ item.photo) }}" class="card-img-top" alt="image" loading="lazy"/>
                         <h5 class="card-title">{{ item.nom }}</h5>
                     </div>
@@ -23,4 +29,58 @@
             </a>
         {% endfor %}
     </div>
+    <div class="rounded-bottom shadow-sm p-4 text-center bg-body-tertiary card-background"
+        style="
+        background-image: url('https://mdbcdn.b-cdn.net/img/new/slides/044.webp');
+        ">
+        <h1 class="display-6 text-center"> SERVICES </h1>
+    </div>
+    <div class="d-flex flex-wrap justify-content-center">
+        {% for category in categories %}
+                <div class="card-body-services">
+                    <h5 class="card-title white-text">{{ category.nomCategorie }}</h5>
+                </div>
+        {% endfor %}
+
+    </div>
+    <div class="rounded-bottom shadow-sm p-4 text-center bg-body-tertiary card-background"
+         style="
+        background-image: url('https://mdbcdn.b-cdn.net/img/new/slides/045.webp');
+        ">
+        <h1 class="display-6 text-center"> NOTRE EQUIPE </h1>
+    </div>
+    <p class="text-center white-text text-accueil" >Notre studio intègre une équipe aux domaines de compétences variés.
+        Studio Little dreams maîtrise ainsi un projet du développement de l’idée à la mise en ligne.</p>
+    <h4 class="text-center card-title-equipe white-text"><i class="bi bi-lightbulb"></i> UN DIRECTEUR ARTISTIQUE</h4>
+    <p class="text-center white-text text-accueil" >Graphic Design / Motion Design / UX Design</p>
+    <h4 class="text-center card-title-equipe white-text"><i class="bi bi-display"></i> UN CONCEPTEUR DEVELOPPEUR</h4>
+    <p class="text-center white-text text-accueil" >Développement Front-Office Trink / WebService en Java ResFull / Maintenance Serveur</p>
+    <h4 class="text-center card-title-equipe white-text"><i class="bi bi-suitcase-lg"></i> UN CHEF DE PROJET</h4>
+    <p class="text-center white-text text-accueil" >Création de site Internet / Refonte de site / Référencement / Publicité</p>
+    <h4 class="text-center card-title-equipe white-text"><i class="bi bi-archive"></i> UN CONSULTANT LOGISTIQUE</h4>
+    <p class="text-center white-text text-accueil" >Commercial / Communication / Gestion / Logistique / Cahier des Charges</p>
+
+
+    <div class="rounded-bottom shadow-sm p-4 text-center bg-body-tertiary card-background"
+         style="
+        background-image: url('https://mdbcdn.b-cdn.net/img/new/slides/052.webp');
+        ">
+        <h1 class="display-6 text-center"> CRÉATION D'APPLICATION MOBILE </h1>
+    </div>
+
+    <p class="text-center white-text text-accueil" >Développement de sites et d'applications pour les mobiles de toutes marques avec
+        système de paiement et tunnel de réservation en ligne depuis le terminal.
+        Possibilité de chercher ou partager de l’information, jouer et saisir des données.
+        Pour un développement de l’image de marque, un nouveau mode de commercialisation ou un nouveau service/produit Tablette/smartphone.
+        Les fonctions de partages sur les réseaux sociaux, de géolocalisation, d’accès aux contacts etc...
+        Partage d’informations d’actualité, de fiches produits, de données clients...
+        Application en version de démo gratuite et version complète payante !
+        Réussite de la conception et de la promotion de votre application mobile.</p>
+
+    <div class="contacts">
+        <h5 class="white-text contact"><i class="bi bi-envelope-fill"></i><strong> Email :</strong> studio.little.dreams@gmail.com</h5>
+        <h5 class="white-text contact"><i class="bi bi-telephone"></i><strong> Téléphone :</strong> 06-59-40-62-86</h5>
+
+    </div>
+
 {% endblock %}

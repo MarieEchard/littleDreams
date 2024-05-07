@@ -1,7 +1,7 @@
 body {
     background: linear-gradient(to bottom, #07fab9, rgb(3, 9, 33)) no-repeat fixed;
     background-size: cover;
-"
+    font-family: "Helvetica Neue", Arial, sans-serif;
 }
 
 .page-container{
@@ -44,6 +44,10 @@ body {
     z-index: 1000;
     right: 0;
     left: 0;
+    color: rgb(11, 89, 152);
+}
+
+.studio-text {
     color: rgb(11, 89, 152);
 }
 
@@ -114,9 +118,33 @@ body {
     z-index: -1; /* Assurez-vous que le fond d'écran flou se trouve en arrière-plan */
 }
 
+
+.desktop-background {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
+.mobile-background {
+    display: none;
+}
+
+/* Affiche le fond d'écran VilleIA sur les écrans dont la largeur est inférieure à 768px */
+@media (max-width: 650px) {
+    .desktop-background {
+        display: none;
+    }
+
+    .mobile-background {
+        display: block;
+        height: 100%;
+        width: 100%;
+    }
+}
+
 .form-custom{
-    margin-top: 7em;
-    background-color: rgba(1, 194, 187, 0.38);
+    margin-top: 9em;
+    background-color: rgba(1, 194, 187, 0.60);
 }
 
 .flash-message {
@@ -227,4 +255,102 @@ body {
 
 .card-text-custom{
     margin: 1em;
+}
+
+.card-body-custom{
+    height: 22em;
+    width: 30em;
+}
+@media (max-width: 768px) {
+    .card-body-custom {
+        height: 18em; /* Ajustez la hauteur selon vos besoins */
+        width: 25em; /* Ajustez la largeur selon vos besoins */
+    }
+}
+.white-text {
+    color: white;
+}
+
+.submit-button {
+    background-color: rgb(11, 89, 152); /* Change la couleur de fond du bouton */
+    border-color: rgb(11, 89, 152); /* Change la couleur de la bordure du bouton */
+    color: #fff; /* Change la couleur du texte du bouton en blanc */
+}
+
+.card-background {
+    color: #dbeafe;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    background-attachment: fixed;
+    background-size: cover;
+
+}
+
+.card-title{
+    text-align: center;
+}
+.card-title-equipe{
+    font-weight: bold;
+    color: rgb(85, 160, 242);
+}
+
+.card-content {
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.card-body-services{
+    border-radius: 50%;
+    width: 200px; /* Ajustez la largeur et la hauteur en fonction de vos besoins */
+    height: 200px;
+    background-image: url('../img/CarteMereIA.png');
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.8);
+    margin: 0.5em;
+}
+
+.text-accueil{
+    font-size: 1.3em;
+    margin: 0.5em 10em 3em;
+}
+@media (max-width: 800px) {
+    .text-accueil {
+        margin: 0.5em 1.5em 3em; /* Marge : haut 0.5em, droite 0, bas 3em, gauche 0 */
+    }
+}
+
+.d-flex{
+    margin-top: 2em;
+    margin-bottom: 5em;
+}
+
+.contacts{
+    color: #dbeafe;
+    margin-top: 1em;
+    padding-top: 20em;
+    padding-bottom: 5em;
+    padding-left: 5em;
+    background-attachment: local;
+    background-size: cover;
+    background-image: url('../img/Contact.png');
+}
+@media (max-width: 800px) {
+    .contacts {
+        color: #dbeafe;
+        margin-top: 1em;
+        padding-top: 15em;
+        padding-bottom: 6em;
+        padding-left: 2em;
+        background-attachment: local;
+        background-size: cover;
+        background-image: url('../img/ContactTel.png');
+    }
+}
+
+.contact{
+    padding-top: 2em;
 }

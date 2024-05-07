@@ -45,7 +45,7 @@
 <header class="flex-wrap justify-content-center">
     <nav class="navbar navbar-expand-lg navbar-light bg-light nav">
         <div class="container-fluid">
-            <a class="navbar-brand display-6" href="{{ path('app_littledreams') }}">
+            <a class="navbar-brand display-6 studio-text" href="{{ path('app_littledreams') }}">
                 <img src="{{ asset('img/Logo300x200.png') }}" alt="logo" width="50"
                      class="d-inline-block align-text-center">
                 Studio Little Dreams
@@ -77,8 +77,8 @@
                     {% else %}
                         <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" onclick="return alertAndRedirect()">rendez-vous</a></li>
                         <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" onclick="return alertAndRedirect()">Devis</a></li>
-                        <li class="btn btn-sm btn-outline-primary"><a class="nav-link" href="{{ path('app_login') }}">Connexion</a></li>
-                        <li class="btn btn-sm btn-outline-primary"><a class="nav-link" href="{{ path('app_profil_creer') }}">Inscription</a></li>
+                        <li class="btn btn-sm btn-outline-primary"><a class="nav-link submit-button" href="{{ path('app_login') }}">Connexion</a></li>
+                        <li class="btn btn-sm btn-outline-primary"><a class="nav-link submit-button" href="{{ path('app_profil_creer') }}">Inscription</a></li>
                     {% endif %}
                 </ul>
             </div>

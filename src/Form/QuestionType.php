@@ -29,20 +29,22 @@ class QuestionType extends AbstractType
             ->add('email', EmailType::class, [
                 'required' => false,
                 'label' => 'E-mail :',
-                'attr' => ['class' => 'form-control']
+                'attr' => ['class' => 'form-control'],
+                'label_attr' => ['class' => 'white-text']
             ])
 
             ->add('question', TextareaType::class, [
                 'label' => 'Quelle est votre question ?',
                 'required' => false,
                 'attr' => ['class' => 'form-control',
-                    'rows' =>8,]
+                    'rows' =>8,],
+                'label_attr' => ['class' => 'white-text']
             ])
 
             ->add('submit', SubmitType::class, [
                 'label' => 'Envoyer',
                 'attr' => [
-                    'class' => 'btn btn-primary'
+                    'class' => 'btn btn-primary submit-button'
                 ]
             ])
             ->add('return', ButtonType::class, [
