@@ -347,7 +347,7 @@ body {
         padding-left: 2em;
         background-attachment: local;
         background-size: cover;
-        background-image: url('../img/ContactTel.png');
+        background-image: url('/assets/img/ContactTel.png');
     }
 }
 
