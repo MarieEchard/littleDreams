@@ -328,26 +328,50 @@ body {
     margin-bottom: 5em;
 }
 
-.contacts{
-    color: #dbeafe;
-    margin-top: 1em;
-    padding-top: 20em;
-    padding-bottom: 5em;
-    padding-left: 5em;
-    background-attachment: local;
-    background-size: cover;
-    background-image: url('../img/Contact.png');
+.contact-container {
+    position: relative; /* Pour positionner les éléments enfants de manière absolue */
+}
+
+.contact-images {
+    position: relative; /* Permet de positionner les images par rapport à ce conteneur */
+}
+
+.contact-info {
+    position: absolute; /* Position absolue par rapport au parent */
+    bottom: 10rem; /* Aligner le bas du conteneur d'infos de contact avec le bas de l'image */
+    left: 0; /* Aligner le côté gauche du conteneur d'infos de contact avec le côté gauche de l'image */
+    padding: 20px; /* Ajouter un espace entre le texte et le bord de l'image */
+    background-color: rgba(0, 0, 0, 0.5); /* Fond semi-transparent pour le texte */
+    width: 100%; /* Assurer que le texte occupe toute la largeur de l'image */
+    box-sizing: border-box; /* Inclure le padding dans la largeur */
+}
+
+@media (max-width: 600px) {
+    .contact-info {
+        position: absolute; /* Position absolue par rapport au parent */
+        bottom: 27rem; /* Aligner le bas du conteneur d'infos de contact avec le bas de l'image */
+        left: 0; /* Aligner le côté gauche du conteneur d'infos de contact avec le côté gauche de l'image */
+        padding: 20px; /* Ajouter un espace entre le texte et le bord de l'image */
+        background-color: rgba(0, 0, 0, 0.5); /* Fond semi-transparent pour le texte */
+        width: 100%; /* Assurer que le texte occupe toute la largeur de l'image */
+        box-sizing: border-box; /* Inclure le padding dans la largeur */
+    }
+}
+.contact-image{
+    display: block;
+    max-width: 100%;
+
+}
+.contact-image-tel{
+    display: none;
 }
 @media (max-width: 800px) {
-    .contacts {
-        color: #dbeafe;
-        margin-top: 1em;
-        padding-top: 15em;
-        padding-bottom: 6em;
-        padding-left: 2em;
-        background-attachment: local;
-        background-size: cover;
-        background-image: url('/assets/img/ContactTel.png');
+    .contact-image {
+        display: none;
+    }
+    .contact-image-tel {
+        display: block;
+        max-width: 100%;
     }
 }
 
