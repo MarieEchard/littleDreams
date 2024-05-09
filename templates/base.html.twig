@@ -62,7 +62,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
            <div class="collapse navbar-collapse bubble-menu" id="bubbleMenu">
-                <ul class="navbar-nav d-flex gap-2 ms-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav gap-2 ms-auto mb-2 mb-lg-0">
                     {% if is_granted('ROLE_ADMIN') %}
                         <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" href="{{ path('app_profil', {'id' : app.user.id }) }}">Gestion</a></li>
                     {% endif %}
@@ -77,8 +77,8 @@
                     {% else %}
                         <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" onclick="return alertAndRedirect()">rendez-vous</a></li>
                         <li class="btn btn-sm btn-outline-secondary"><a class="nav-link" onclick="return alertAndRedirect()">Devis</a></li>
-                        <li class="btn btn-sm btn-outline-primary"><a class="nav-link submit-button" href="{{ path('app_login') }}">Connexion</a></li>
-                        <li class="btn btn-sm btn-outline-primary"><a class="nav-link submit-button" href="{{ path('app_profil_creer') }}">Inscription</a></li>
+                        <li class="btn btn-sm btn-outline-primary submit-button"><a class="nav-link white-text" href="{{ path('app_login') }}">Connexion</a></li>
+                        <li class="btn btn-sm btn-outline-primary submit-button "><a class="nav-link white-text" href="{{ path('app_profil_creer') }}">Inscription</a></li>
                     {% endif %}
                 </ul>
             </div>

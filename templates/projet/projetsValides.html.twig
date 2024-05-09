@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}services - LittleDreams{% endblock %}
+{% block title %}Projets en cours - LittleDreams{% endblock %}
 
 {% block body %}
     <div class="container d-flex justify-content-center">
@@ -11,13 +11,13 @@
             <div class="row g-0">
                 <div class="col-md-4 custom-sidebar">
                     <ul>
-                        <li><a href="{{ path('app_profil', {'id' : app.user.id }) }}"> Mon Profil</a></li>
+                        <li><a href="{{ path('app_profil', {'id': app.user.id }) }}">Mon Profil</a></li>
                         <hr>
                         <li><a href="{{ path('app_profil_creer') }}">Créer un administrateur</a></li>
                         <hr>
                         <li><a href="{{ path('app_services') }}">gestion des services</a></li>
                         <hr>
-                        <li><a href="#">Gestion Portfolio</a></li>
+                        <li><a href="{{ path('app_portfolio_creer_item') }}">création Item</a></li>
                         <hr>
                         <li><a href="{{ path('app_question_reponse') }}">Repondre aux questions</a></li>
                         <hr>
@@ -25,7 +25,7 @@
                         <hr>
                         <li><a href="{{ path('app_devis_validation_liste') }}">validation devis</a></li>
                         <hr>
-                        <li><a href="{{ path('app_projet_valides') }}">projets en cours</a></li>
+                        <li>projets en cours</li>
                     </ul>
                 </div>
 
@@ -33,7 +33,7 @@
                     <div class="card-header card-header-custom text-center">
                         <h5 class="card-title mb-0">Liste projets en cours</h5>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body m-3">
                         {% if projetsValides is not empty %}
                             {% for projet in projetsValides %}
                                 <div class="card">
@@ -58,7 +58,7 @@
                                                 <strong>Reste à payer:</strong> {{ projet.resteAPayer }}<br>
                                             {% endif %}
                                         </p>
-                                        <a class="btn btn-primary" type="button"
+                                        <a class="btn btn-primary submit-button" type="button"
                                            href="{{ path('app_projet_modifier', {'id': projet.id }) }}"> modifier
                                         </a>
                                     </div>

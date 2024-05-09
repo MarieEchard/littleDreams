@@ -11,68 +11,107 @@
 {% endblock %}
 
 {% block body %}
-    {% if is_granted('ROLE_ADMIN') %}
-        <h1 class="display-6 text-center">Modification du Profil</h1>
-    {% else %}
-        <h1 class="display-6 text-center">Modification de votre Profil</h1>
-    {% endif %}
-
-    <div class="d-flex justify-content-center">
-        <div class="border border-0 rounded p-3"
-             style="
-                margin-top: 1rem;
-                margin-bottom: 1rem;
-                background-color: rgba(255,255,255,0.16);
-                "
-        >
-
-            {{ form_start(form) }}
-
-            {% if estPropreProfil %}
-                {% if estAdmin %}
-                    {{ form_row(form.nom) }}
-                    {{ form_row(form.prenom) }}
-                    {{ form_row(form.email) }}
-                    {{ form_row(form.telephone) }}
-                    {{ form_row(form.plainPassword) }}
-                    {{ form_row(form.photo) }}
-                {% else %}
-                    {{ form_row(form.nom) }}
-                    {{ form_row(form.prenom) }}
-                    {{ form_row(form.email) }}
-                    {{ form_row(form.telephone) }}
-                    {{ form_row(form.plainPassword) }}
-                    {{ form_row(form.photo) }}
-                    {{ form_row(form.noRue) }}
-                    {{ form_row(form.rue) }}
-                    {{ form_row(form.codePostal) }}
-                    {{ form_row(form.ville) }}
-                    <p> Si vous souhaitez modifier un autre élément,
-                        <br> veuillez contacter un administrateur</p>
-                {% endif %}
-            {% else %}
-                {% if estAdmin %}
-                    {% if userRoles == ['ROLE_USER'] %}
-                        {{ form_row(form.nom) }}
-                        {{ form_row(form.prenom) }}
-                        {{ form_row(form.email) }}
-                        {{ form_row(form.nomSociete) }}
-                        {{ form_row(form.noSiret) }}
-                    {% elseif userRoles == ['ROLE_ADMIN']%}
-                        {{ form_row(form.nom) }}
-                        {{ form_row(form.prenom) }}
-                        {{ form_row(form.email) }}
-{#                        {{ form_row(form.estAdmin) }}#}
+    <div class="container d-flex justify-content-center">
+        <div class="background">
+            <img src="{{ asset('img/TechBleu.png') }}" alt="image IA" style="height: 100%; width: 100%">
+        </div>
+        <div class="mb-3 custom-card-profile">
+            <div class="row g-0">
+                <div class="col-md-4 custom-sidebar">
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <ul>
+                            <li><a href="{{ path('app_profil', {'id': app.user.id }) }}">Mon Profil</a></li>
+                            <hr>
+                            <li>Modification du Profil</li>
+                            <hr>
+                            <li><a href="{{ path('app_profil_creer') }}">Créer un administrateur</a></li>
+                            <hr>
+                            <li><a href="{{ path('app_services') }}">gestion des services</a></li>
+                            <hr>
+                            <li><a href="{{ path('app_portfolio_creer_item') }}">création Item</a></li>
+                            <hr>
+                            <li><a href="{{ path('app_question_reponse') }}">Repondre aux questions</a></li>
+                            <hr>
+                            <li><a href="{{ path('app_rendezvous_validation_liste') }}">validation rendez vous</a></li>
+                            <hr>
+                            <li><a href="{{ path('app_devis_validation_liste') }}">validation devis</a></li>
+                            <hr>
+                            <li><a href="{{ path('app_projet_valides') }}">projets en cours</a></li>
+                        </ul>
+                    {% else %}
+                        <ul>
+                            <li><a href="{{ path('app_profil', {'id': app.user.id }) }}">Mon Profil</a></li>
+                            <hr>
+                            <li>Modification du Profil</li>
+                            <hr>
+                            <li><a href="{{ path('app_mes-questions') }}">Mes questions</a></li>
+                            <hr>
+                            <li><a href="{{ path('app_rendezvous_personnels', {'id': app.user.id }) }}">Mes rendez-vous</a></li>
+                            <hr>
+                            <li><a href="{{ path('app_devis_mesprojets', {'id': app.user.id }) }}">Mes projets</a></li>
+                        </ul>
                     {% endif %}
-                {% endif %}
-            {% endif %}
+                </div>
 
-            {{ form_widget(form.submit) }} {{ form_widget(form.return) }}
+                <div class="col-md-8">
+                    <div class="card-header card-header-custom" >
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <h1 class="display-6 text-center">Modification du Profil</h1>
+                        {% else %}
+                            <h1 class="display-6 text-center">Modification de votre Profil</h1>
+                        {% endif %}
+                    </div>
+                    <div class="card-body m-3">
+                        {{ form_start(form) }}
 
-            {{ form_end(form) }}
+                        {% if estPropreProfil %}
+                            {% if estAdmin %}
+                                {{ form_row(form.nom) }}
+                                {{ form_row(form.prenom) }}
+                                {{ form_row(form.email) }}
+                                {{ form_row(form.telephone) }}
+                                {{ form_row(form.plainPassword) }}
+                                {{ form_row(form.photo) }}
+                            {% else %}
+                                {{ form_row(form.nom) }}
+                                {{ form_row(form.prenom) }}
+                                {{ form_row(form.email) }}
+                                {{ form_row(form.telephone) }}
+                                {{ form_row(form.plainPassword) }}
+                                {{ form_row(form.photo) }}
+                                {{ form_row(form.noRue) }}
+                                {{ form_row(form.rue) }}
+                                {{ form_row(form.codePostal) }}
+                                {{ form_row(form.ville) }}
+                                <p> Si vous souhaitez modifier un autre élément,
+                                    <br> veuillez contacter un administrateur</p>
+                            {% endif %}
+                        {% else %}
+                            {% if estAdmin %}
+                                {% if userRoles == ['ROLE_USER'] %}
+                                    {{ form_row(form.nom) }}
+                                    {{ form_row(form.prenom) }}
+                                    {{ form_row(form.email) }}
+                                    {{ form_row(form.nomSociete) }}
+                                    {{ form_row(form.noSiret) }}
+                                {% elseif userRoles == ['ROLE_ADMIN']%}
+                                    {{ form_row(form.nom) }}
+                                    {{ form_row(form.prenom) }}
+                                    {{ form_row(form.email) }}
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
 
+                        {{ form_widget(form.submit) }} {{ form_widget(form.return) }}
+
+                        {{ form_end(form) }}
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
 
 {% endblock %}
 

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Profil - LittleDreams{% endblock %}
+{% block title %}Mes rendez-vous - LittleDreams{% endblock %}
 
 {% block body %}
     <div class="container d-flex justify-content-center">
@@ -11,20 +11,18 @@
             <div class="row g-0">
                 <div class="col-md-4 custom-sidebar">
                     <ul>
-                        <li><a href="{{ path('app_profil', {'id' : app.user.id }) }}"> Mon Profil</a></li>
+                        <li><a href="{{ path('app_profil', {'id': app.user.id }) }}">Mon Profil</a></li>
                         <hr>
                         <li><a href="{{ path('app_mes-questions') }}">Mes questions</a></li>
                         <hr>
                         <li>Mes rendez-vous</li>
                         <hr>
-                        <li><a href="#">Mes demandes de devis</a></li>
-                        <hr>
-                        <li><a href="#">Mes projets</a></li>
+                        <li><a href="{{ path('app_devis_mesprojets', {'id': app.user.id }) }}">Mes projets</a></li>
                     </ul>
                 </div>
 
                 <div class="col-md-8">
-                    <div class="card-header card-header-custom" ><h5 class="card-title">Mes questions</h5></div>
+                    <div class="card-header card-header-custom" ><h5 class="card-title">Mes rendez-vous</h5></div>
                     <div class="card-body">
 
                         {% if rdvUtilisateur is not empty %}

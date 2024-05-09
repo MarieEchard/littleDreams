@@ -9,7 +9,8 @@
             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
         <div class="background">
-            <img src="{{ asset('img/Wallpaper IA.png') }}" alt="image IA">
+            <img src="{{ asset('img/CarteMereIA.png') }}" alt="carte mère IA" class="desktop-background">
+            <img src="{{ asset('img/tableauIA.png') }}" alt="tableau connexion IA" class="mobile-background">
         </div>
         <div class="d-flex justify-content-center">
             <div class="border border-0 rounded p-4 form-custom">
@@ -27,7 +28,8 @@
                 </div>
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-                <a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié ?</a>
+                <br>
+                <a class="blue-link" href="{{ path('app_forgot_password_request') }}">Mot de passe oublié ?</a>
 
                 <div class="pt-3">
                     <div class="form-check pt-3">
@@ -36,10 +38,10 @@
                             Se souvenir de moi
                         </label>
                     </div>
-                    <button class="btn btn-primary" type="submit">
+                    <button class="btn btn-primary submit-button" type="submit">
                         <connexion>Connexion</connexion>
                     </button>
-                    <button class="btn btn-primary" type="button">
+                    <button class="btn btn-primary submit-button" type="button">
                         <a class="nav-link" href="{{ path('app_profil_creer') }}">Inscription</a>
                     </button>
                 </div>

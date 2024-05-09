@@ -52,6 +52,9 @@ class ItemPortfolioType extends AbstractType
 
             ->add('submit', SubmitType::class, [
                 'label' => 'créer',
+                'attr' => [
+                    'class' => 'btn btn-primary submit-button'
+                ]
             ])
             ->add('return', ButtonType::class, [
                 'label' => 'Retour',

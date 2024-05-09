@@ -35,16 +35,11 @@ class ProjetType extends AbstractType
                     new Assert\Type(['type' => 'numeric', 'message' => 'Le reste à payer doit être un nombre.']),
                 ],
             ])
-//            ->add('rendezVous', EntityType::class, [
-//                'class' => RendezVous::class,
-//                'choice_label' => 'nom',
-//                'choices' => $options['rendezVous'],
-//            ])
 
             ->add('submit', SubmitType::class, [
                 'label' => 'Envoyer',
                 'attr' => [
-                    'class' => 'btn btn-primary'
+                    'class' => 'btn btn-primary submit-button'
                 ]
             ])
             ->add('return', ButtonType::class, [

@@ -1,11 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Envoie d'un email pour réinitialiser le mot de passe{% endblock %}
+{% block title %}réinitialisation mot de passe{% endblock %}
 
 {% block body %}
-    <p>
-       si votre e-mail est associé avec un compte existant, un email sera envoyé contenant un lien pour réinitialiser votre mot de passe.
-        Ce lien expire dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
-    </p>
-    <p>Si vous ne recevez pas d'email de notre part, merci de vérifier vos Spam avant de <a href="{{ path('app_forgot_password_request') }}">réessayer</a>.</p>
+    <div class="background">
+        <img src="{{ asset('img/Elements.png') }}" alt="image Elements IA" class="desktop-background">
+        <img src="{{ asset('img/ElementsTel.png') }}" alt="image Elements IA" class="mobile-background">
+    </div>
+    <div class="d-flex justify-content-center">
+        <div class="border border-0 rounded p-4 form-custom">
+            <h1 class="display-6 text-center white-text">Réinitialisation du mot de passe</h1>
+            <br>
+            <p>
+                si votre e-mail est associé avec un compte existant, un email sera envoyé contenant un lien pour réinitialiser votre mot de passe.
+                Ce lien expire dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+            </p>
+            <p>Si vous ne recevez pas d'email de notre part, merci de vérifier vos Spam avant de <a class="btn btn-primary submit-button" href="{{ path('app_forgot_password_request') }}">réessayer</a>.</p>
+        </div>
+    </div>
+
+
 {% endblock %}

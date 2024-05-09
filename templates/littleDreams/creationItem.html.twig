@@ -6,23 +6,52 @@
     Création d'item - LittleDreams
 {% endblock %}
 
+
 {% block body %}
-    <h1 class="display-6 text-center">Création d'item</h1>
-    <div class="d-flex justify-content-center">
-        <div class="border border-0 rounded p-3"
-             style="
-                margin-top: 1rem;
-                margin-bottom: 1rem;
-                background-color: rgba(255,255,255,0.16);
-                "
-        >
-            {{ form_start(form) }}
-                {{ form_row(form.nom) }}
-                {{ form_row(form.objectifClient) }}
-                {{ form_row(form.categories) }}
-                {{ form_row(form.photo) }}
-                {{ form_widget(form.submit) }} {{ form_widget(form.return) }}
-            {{ form_end(form) }}
+    <div class="container d-flex justify-content-center">
+        <div class="background">
+            <img src="{{ asset('img/TechBleu.png') }}" alt="image IA" style="height: 100%; width: 100%">
+        </div>
+        <div class="mb-3 custom-card-profile">
+            <div class="row g-0">
+                <div class="col-md-4 custom-sidebar">
+                    <ul>
+                        <li><a href="{{ path('app_profil', {'id': app.user.id }) }}">Mon Profil</a></li>
+                        <hr>
+                        <li><a href="{{ path('app_profil_creer') }}">Créer un administrateur</a></li>
+                        <hr>
+                        <li><a href="{{ path('app_services') }}">gestion des services</a></li>
+                        <hr>
+                        <li>création Item</li>
+                        <hr>
+                        <li><a href="{{ path('app_question_reponse') }}">Repondre aux questions</a></li>
+                        <hr>
+                        <li><a href="{{ path('app_rendezvous_validation_liste') }}">validation rendez vous</a></li>
+                        <hr>
+                        <li><a href="{{ path('app_devis_validation_liste') }}">validation devis</a></li>
+                        <hr>
+                        <li><a href="{{ path('app_projet_valides') }}">projets en cours</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-8">
+                    <div class="card-header card-header-custom text-center">
+                        <h5 class="card-title mb-0">Création d'item</h5>
+                    </div>
+                    <div class="card-body m-3">
+
+                        {{ form_start(form) }}
+                        {{ form_row(form.nom) }}
+                        {{ form_row(form.objectifClient) }}
+                        {{ form_row(form.categories) }}
+                        {{ form_row(form.photo) }}
+                        {{ form_widget(form.submit) }} {{ form_widget(form.return) }}
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+
 {% endblock %}

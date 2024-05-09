@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    Création d'item - LittleDreams
+    item détail - LittleDreams
 {% endblock %}
 
 {% block body %}
@@ -10,6 +10,7 @@
             <div class="card-body">
                 <img src="{{ asset(photo_dir ~ '/' ~ item.photo) }}" class="card-img-top" alt="image" loading="lazy"/>
                 <h5 class="card-title">{{ item.nom }}</h5>
+                <p class="card-text">{{ item.categories }}</p>
                 <p class="card-text">{{ item.objectifClient }}</p>
                 {% if is_granted('ROLE_ADMIN') %}
                     <a type="button" class="btn btn-danger"

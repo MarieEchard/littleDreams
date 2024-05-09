@@ -241,6 +241,7 @@ class UserType extends AbstractType
             ->add('submit', SubmitType::class, [
                 'label' => 'Envoyer',
                 'attr' => [
+                    'class' => 'btn btn-primary submit-button'
                 ]
             ])
             ->add('return', ButtonType::class, [

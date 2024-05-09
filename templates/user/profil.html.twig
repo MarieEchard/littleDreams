@@ -12,14 +12,13 @@
                 <div class="col-md-4 custom-sidebar">
                     {% if is_granted('ROLE_ADMIN') %}
                         <ul>
-                            <li><a href="{{ path('app_profil', {'id' : app.user.id }) }}"> Mon Profil</a></li>
+                            <li> Mon Profil</li>
                             <hr>
                             <li><a href="{{ path('app_profil_creer') }}">Créer un administrateur</a></li>
                             <hr>
                             <li><a href="{{ path('app_services') }}">gestion des services</a></li>
                             <hr>
                             <li><a href="{{ path('app_portfolio_creer_item') }}">création Item</a></li>
-
                             <hr>
                             <li><a href="{{ path('app_question_reponse') }}">Repondre aux questions</a></li>
                             <hr>
@@ -79,7 +78,7 @@
 
                         <div class="custom-profile-button">
 
-                                <a class="btn btn-primary" type="button"
+                                <a class="btn btn-primary submit-button" type="button"
                                    href="{{ path('app_profil_modifier', {'id': user.id }) }}"> modifier
                                 </a>
                             {% if is_granted('ROLE_ADMIN') %}
